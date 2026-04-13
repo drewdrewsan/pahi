@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Asian Health in Philadelphia</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --ink: #1a1208;
+  --paper: #faf8f3;
+  --warm: #f0ebe0;
+  --gold: #c8922a;
+  --gold-light: #f5e8cc;
+  --teal: #1b6b5f;
+  --teal-light: #d4ede9;
+  --red: #b83535;
+  --red-light: #f5e0e0;
+  --slate: #4a5568;
+  --border: rgba(26,18,8,.12);
+  --asian: #1b6b5f;
+  --white-r: #5a6a7a;
+  --black-r: #b83535;
+  --hisp: #c8922a;
+  --city: #9a8a7a;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--paper); color:var(--ink); line-height:1.6; }
+
+/* ── NAV ── */
+nav {
+  position:sticky; top:0; z-index:100;
+  background:var(--ink); color:var(--paper);
+  display:flex; flex-wrap:wrap; align-items:center; gap:0; padding:0 2rem;
+  font-size:13px; font-weight:500; border-bottom:2px solid var(--gold);
+}
+.nav-brand { font-family:'DM Serif Display',serif; font-size:15px; color:var(--gold); padding:14px 0; margin-right:1.5rem; white-space:nowrap; }
+.nav-pages { display:flex; gap:0; border-right:1px solid rgba(200,146,42,.25); margin-right:1rem; padding-right:1rem; }
+.nav-page { font-size:13px; font-weight:500; background:transparent; border:none; color:rgba(250,248,243,.55); cursor:pointer; padding:14px 14px; white-space:nowrap; border-bottom:2px solid transparent; margin-bottom:-2px; transition:color .2s; }
+.nav-page:hover { color:rgba(250,248,243,.85); }
+.nav-page.active { color:var(--gold); border-bottom-color:var(--gold); }
+.nav-links { display:flex; gap:0; overflow-x:auto; flex:1; }
+.nav-links a { color:rgba(250,248,243,.65); text-decoration:none; padding:14px 14px; white-space:nowrap; transition:color .2s; border-bottom:2px solid transparent; margin-bottom:-2px; }
+.nav-links a:hover, .nav-links a.active { color:var(--gold); border-bottom-color:var(--gold); }
+
+/* ── PAGES ── */
+.page { display:none; }
+.page.active { display:block; }
+
+/* ── HERO ── */
+.hero {
+  background:var(--ink);
+  padding:5rem 2rem 4rem;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(200,146,42,.06) 80px),
+              repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(200,146,42,.06) 80px);
+}
+.hero-inner { max-width:1100px; margin:0 auto; position:relative; }
+.hero-tag { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; }
+.hero h1 { font-family:'DM Serif Display',serif; font-size:clamp(2.4rem,5vw,4rem); color:var(--paper); line-height:1.1; margin-bottom:1.5rem; max-width:700px; }
+.hero h1 em { font-style:italic; color:var(--gold); }
+.hero-sub { color:rgba(250,248,243,.65); font-size:16px; max-width:560px; line-height:1.7; margin-bottom:2.5rem; }
+.hero-stats { display:flex; flex-wrap:wrap; gap:2rem; }
+.h-stat { }
+.h-stat .num { font-family:'DM Serif Display',serif; font-size:2.8rem; color:var(--gold); line-height:1; }
+.h-stat .lbl { font-size:12px; color:rgba(250,248,243,.55); margin-top:4px; max-width:150px; }
+.sources-bar { margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid rgba(200,146,42,.2); font-size:11px; color:rgba(250,248,243,.4); display:flex; flex-wrap:wrap; gap:1rem; }
+.sources-bar span { padding:3px 10px; border:1px solid rgba(200,146,42,.2); border-radius:20px; }
+
+/* ── SECTIONS ── */
+.section { padding:4rem 2rem; }
+.section:nth-child(even) { background:var(--warm); }
+.container { max-width:1100px; margin:0 auto; }
+.section-head { margin-bottom:2.5rem; }
+.section-head .eyebrow { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:.5rem; }
+.section-head h2 { font-family:'DM Serif Display',serif; font-size:clamp(1.6rem,3vw,2.2rem); line-height:1.2; margin-bottom:.75rem; }
+.section-head p { color:var(--slate); font-size:14.5px; max-width:620px; line-height:1.7; }
+
+/* ── LEGEND ── */
+.legend { display:flex; flex-wrap:wrap; gap:12px; margin-bottom:1.25rem; font-size:12px; color:var(--slate); }
+.legend span { display:flex; align-items:center; gap:6px; }
+.ld { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
+
+/* ── CARDS ── */
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
+.card { background:white; border-radius:10px; border:1px solid var(--border); padding:1.25rem; }
+.card .card-label { font-size:11px; color:var(--slate); margin-bottom:.25rem; }
+.card .card-val { font-size:2rem; font-weight:600; line-height:1; }
+.card .card-sub { font-size:11px; color:#aaa; margin-top:.25rem; }
+.card.asian .card-val { color:var(--asian); }
+.card.black .card-val { color:var(--black-r); }
+
+/* ── CHARTS ── */
+.chart-box { background:white; border-radius:10px; border:1px solid var(--border); padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
+.chart-title { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:.25rem; }
+.chart-note { font-size:11px; color:#aaa; margin-bottom:.75rem; }
+.chart-wrap { position:relative; width:100%; }
+.grid2 { display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+
+/* ── INSIGHT CALLOUT ── */
+.insight { background:var(--teal-light); border-left:4px solid var(--teal); border-radius:0 8px 8px 0; padding:.9rem 1.1rem; margin-top:1.25rem; font-size:13.5px; color:#2a4a45; line-height:1.6; }
+.insight strong { color:var(--teal); }
+.insight.warn { background:var(--red-light); border-left-color:var(--red); color:#5a2020; }
+.insight.warn strong { color:var(--red); }
+.insight.gold { background:var(--gold-light); border-left-color:var(--gold); color:#5a3a10; }
+.insight.gold strong { color:var(--gold); }
+
+/* ── DATA TABLE ── */
+.data-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+.data-table th { font-size:11px; font-weight:600; color:var(--slate); text-align:left; padding:8px 10px; border-bottom:2px solid var(--border); white-space:nowrap; background:var(--warm); }
+.data-table th:not(:first-child) { text-align:right; }
+.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+.data-table td:not(:first-child) { text-align:right; }
+.data-table tr:hover td { background:rgba(27,107,95,.04); }
+.tag-best { color:var(--teal); font-weight:600; }
+.tag-worst { color:var(--black-r); font-weight:600; }
+.tag-note { font-size:10px; color:#aaa; display:block; }
+
+/* ── FILTER TABS ── */
+.filter-tabs { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.25rem; }
+.ftab { font-size:12px; padding:5px 14px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--slate); cursor:pointer; transition:all .2s; }
+.ftab.active, .ftab:hover { background:var(--teal); color:white; border-color:var(--teal); }
+
+/* ── DISTRICT BARS ── */
+.district-row { display:flex; align-items:center; gap:10px; margin-bottom:7px; font-size:12px; }
+.district-name { width:160px; flex-shrink:0; text-align:right; color:var(--slate); }
+.district-track { flex:1; height:16px; background:var(--warm); border-radius:3px; overflow:hidden; }
+.district-fill { height:100%; border-radius:3px; background:var(--asian); transition:width .5s ease; }
+.district-val { width:40px; flex-shrink:0; font-weight:500; color:var(--asian); }
+
+/* ── DISPARITY BADGES ── */
+.disp-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
+.disp-card { background:white; border-radius:10px; border:1px solid var(--border); padding:1rem 1.25rem; }
+.disp-card .ind-name { font-size:12.5px; font-weight:500; margin-bottom:.5rem; }
+.disp-card .ind-cat { font-size:10px; color:#aaa; margin-bottom:.75rem; }
+.race-bars { display:flex; flex-direction:column; gap:4px; }
+.race-row-d { display:flex; align-items:center; gap:8px; }
+.race-lbl { font-size:10px; width:44px; flex-shrink:0; color:var(--slate); text-align:right; }
+.race-track { flex:1; height:12px; background:#f0f0ec; border-radius:2px; overflow:hidden; }
+.race-fill { height:100%; border-radius:2px; }
+.race-val { font-size:10px; width:44px; flex-shrink:0; text-align:right; font-weight:500; }
+
+/* ── FOOTER ── */
+footer { background:var(--ink); color:rgba(250,248,243,.45); padding:2.5rem 2rem; font-size:12px; }
+footer .fc { max-width:1100px; margin:0 auto; }
+footer .sources { margin-top:1rem; line-height:1.9; }
+
+@media(max-width:720px) {
+  .grid2, .grid3 { grid-template-columns:1fr; }
+  .org-grid { grid-template-columns:1fr; }
+  .district-name { width:110px; }
+  .hero { padding:3rem 1.25rem 2.5rem; }
+  .section { padding:2.5rem 1.25rem; }
+  .nav-pages { border-right:none; margin-right:0; padding-right:0; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Asian Health · Philadelphia</div>
+  <div class="nav-pages">
+    <button class="nav-page active" onclick="showPage('data')">Data Report</button>
+    <button class="nav-page" onclick="showPage('orgs')">Community Organizations</button>
+    <button class="nav-page" onclick="showPage('penn')">Penn Resources</button>
+  </div>
+  <div class="nav-links" id="data-subnav">
+    <a href="#overview" class="active">Overview</a>
+    <a href="#chronic">Chronic disease</a>
+    <a href="#mental">Mental health</a>
+    <a href="#maternal">Maternal &amp; child</a>
+    <a href="#cardiovascular">Cardiovascular</a>
+    <a href="#national">National comparison</a>
+    <a href="#geography">Geography</a>
+    <a href="#full-data">Full disparity data</a>
+  </div>
+</nav>
+
+<div id="page-data" class="page active">
+<!-- HERO -->
+<div class="hero" id="overview">
+  <div class="hero-inner">
+    <div class="hero-tag">Philadelphia · Asian Health Disparities Report</div>
+    <h1>The data behind <em>Asian health</em> in Philadelphia</h1>
+    <p class="hero-sub">Asian Philadelphians live the longest of any racial group, yet face hidden disparities in mental health access, prenatal care, and a growing working-class population with real unmet need. This report synthesizes four data sources to tell the full story.</p>
+    <div class="hero-stats">
+      <div class="h-stat"><div class="num">84.9</div><div class="lbl">Life expectancy at birth (yrs), Asian/PI</div></div>
+      <div class="h-stat"><div class="num">7.6%</div><div class="lbl">of Philadelphia's population, ~123k residents</div></div>
+      <div class="h-stat"><div class="num">+70%</div><div class="lbl">population growth since 2000</div></div>
+      <div class="h-stat"><div class="num">6.3%</div><div class="lbl">diagnosed depression (vs 29% White, 23% Black)</div></div>
+    </div>
+    <div class="sources-bar">
+      <span>Health of the City (PDPH, 2012–2022)</span>
+      <span>NHIS 2019 National Survey (n=31,997)</span>
+      <span>Racial Disparities in Philadelphia (PHMC, 2014–15)</span>
+      <span>PhilaStats SDOH Planning Districts (2010–2023)</span>
+    </div>
+  </div>
+</div>
+
+<!-- CHRONIC DISEASE -->
+<section class="section" id="chronic">
+<div class="container">
+  <div class="section-head">
+    <div class="eyebrow">Chronic conditions</div>
+    <h2>Low diagnosis rates — but are they real?</h2>
+    <p>Asian adults show the lowest diagnosed chronic disease rates of any group. The question is how much reflects genuinely better health versus systematic underdiagnosis and underutilization of care.</p>
+  </div>
+  <div class="legend">
+    <span><span class="ld" style="background:var(--asian)"></span>Asian</span>
+    <span><span class="ld" style="background:var(--white-r)"></span>White</span>
+    <span><span class="ld" style="background:var(--black-r)"></span>Black</span>
+    <span><span class="ld" style="background:var(--hisp)"></span>Hispanic</span>
+  </div>
+  <div class="grid2">
+    <div class="chart-box">
+      <div class="chart-title">Diagnosed hypertension (%)</div>
+      <div class="chart-note">Philly BRFSS-linked survey · Adults · 2015–2021 · NH Asian vs NHIS national 22.9%</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="c-hyp"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Diagnosed diabetes (%)</div>
+      <div class="chart-note">Philly survey · Adults · 2015–2021</div>
+      <div class="chart-wrap" style="height:180px"><canvas id="c-dm"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Hospitalization rates (per 10,000)</div>
+      <div class="chart-note">Age-adjusted · Philly · 2019–2021 average · Males</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-hosp"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Current smokers (%)</div>
+      <div class="chart-note">Philly adults · Consistent across sources</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="c-smoke"></canvas></div>
+    </div>
+  </div>
+  <div class="insight warn"><strong>Hypertension gap is a data quality flag.</strong> Philly's diagnosed hypertension for Asian adults is 3.1% — vs 22.9% in the national NHIS. This ~7× gap is implausibly large and almost certainly reflects systematic underdiagnosis or undercounting in the local survey, not a genuine 7-fold health advantage.</div>
+  <div class="insight" style="margin-top:.75rem"><strong>Smoking is the most reliable metric.</strong> Asian adults smoke at roughly half the White rate (9.6% vs 18.8% in Philly; 7.2% vs 15.5% nationally). This advantage is consistent across both data sources and likely genuine.</div>
+</div>
+</section>
+
+<!-- MENTAL HEALTH -->
+<section class="section" id="mental">
+<div class="container">
+  <div class="section-head">
+    <div class="eyebrow">Mental health</div>
+    <h2>The underdiagnosis paradox</h2>
+    <p>Asian adults are diagnosed with depression and anxiety at a fraction of the rate of other groups — yet standardized symptom screeners show smaller gaps, pointing to systematic underdiagnosis driven by stigma and care access barriers.</p>
+  </div>
+  <div class="grid2">
+    <div class="chart-box">
+      <div class="chart-title">Depression: diagnosed (%) vs screened (%)</div>
+      <div class="chart-note">Left: self-reported diagnosis (Philly + NHIS). Right: PHQ-8 moderate/severe (NHIS national objective screener).</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="c-dep"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Suicidal ideation — heterosexual teens (%)</div>
+      <div class="chart-note">Philly Youth Risk Behavior Survey · High school students</div>
+      <div class="chart-wrap" style="height:240px"><canvas id="c-suicide"></canvas></div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card asian"><div class="card-label">Asian dep. diagnosed (Philly)</div><div class="card-val">6.3%</div><div class="card-sub">vs 29.3% White, 23.2% Black</div></div>
+    <div class="card asian"><div class="card-label">Asian dep. diagnosed (NHIS national)</div><div class="card-val">5.2%</div><div class="card-sub">Consistent across both sources</div></div>
+    <div class="card"><div class="card-label">PHQ-8 moderate/severe (NHIS)</div><div class="card-val">2.3%</div><div class="card-sub">vs 7.3% White on objective screen</div></div>
+    <div class="card"><div class="card-label">US-born vs foreign-born dep. diagnosis</div><div class="card-val">9.3% / 4.4%</div><div class="card-sub">US-born Asians diagnosed at 2× the rate</div></div>
+  </div>
+  <div class="insight warn"><strong>Depression is the strongest evidence of systematic underdiagnosis.</strong> The diagnosed depression rate (5–6%) is consistent across Philly and national data — two independent sources converging on the same implausibly low figure. The PHQ-8 objective screener narrows the gap considerably (2.3% Asian vs 7.3% White), but does not eliminate it, suggesting real population differences AND underdiagnosis are both at work.</div>
+</div>
+</section>
+
+<!-- MATERNAL & CHILD -->
+<section class="section" id="maternal">
+<div class="container">
+  <div class="section-head">
+    <div class="eyebrow">Maternal, infant &amp; child health</div>
+    <h2>Mixed outcomes — one clear gap</h2>
+    <p>Most birth outcomes are favorable for Asian Philadelphians. The one persistent gap: late or no prenatal care at nearly double the White rate, pointing to access barriers that persist despite generally better health status.</p>
+  </div>
+  <div class="grid2">
+    <div class="chart-box">
+      <div class="chart-title">Prenatal care access &amp; birth outcomes (%)</div>
+      <div class="chart-note">Philly Vital Statistics · Latest available year</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="c-maternal"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Child &amp; teen health indicators</div>
+      <div class="chart-note">Sources: Philly Health of City, PHMC, YRBS</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="c-child"></canvas></div>
+    </div>
+  </div>
+  <div class="insight warn"><strong>Late prenatal care is the clearest access gap.</strong> 12.9% of Asian/PI mothers received late or no prenatal care — nearly double the White rate (6.75%) and close to the city average. This gap persists despite higher life expectancy, suggesting language access, insurance coverage patterns, and provider availability are barriers specific to pregnancy care.</div>
+  <div class="insight" style="margin-top:.75rem"><strong>Blood lead exposure is remarkably low.</strong> Only 0.46% of Asian/PI 3-year-olds tested positive for elevated blood lead — vs 7.6% White and 2.3% Black — likely reflecting newer housing and residential geography away from older lead-paint stock.</div>
+</div>
+</section>
+
+<!-- CARDIOVASCULAR -->
+<section class="section" id="cardiovascular">
+<div class="container">
+  <div class="section-head">
+    <div class="eyebrow">Cardiovascular disease</div>
+    <h2>Population-adjusted: a genuine advantage, with one concern</h2>
+    <p>Heart disease death rates for Asian/PI Philadelphians are roughly one-quarter the Black rate. But stroke mortality is rising and sits above the Hispanic rate — worth monitoring given elevated hemorrhagic stroke risk in East and South Asian populations.</p>
+  </div>
+  <div class="grid2">
+    <div class="chart-box">
+      <div class="chart-title">Heart disease death rate (per 100,000 · 2021)</div>
+      <div class="chart-note">Population-adjusted using 2021 race-specific population estimates</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c-hd"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Stroke death rate (per 100,000 · latest available)</div>
+      <div class="chart-note">Asian/PI stroke rate rising since 2019 — from 15.5 to 30.1/100k</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="c-stroke"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">Cardiovascular hospitalizations (per 10,000 · age-adjusted · 2019–2021)</div>
+    <div class="chart-note">Three metrics side by side. Asian/PI consistently lowest.</div>
+    <div class="chart-wrap" style="height:220px"><canvas id="c-cvhosp"></canvas></div>
+  </div>
+  <div class="insight gold"><strong>Rising stroke mortality in Asian/PI residents needs monitoring.</strong> The stroke death rate went from 15.5/100k (2019) to 30.1/100k (2021) — doubling in two years. Even accounting for COVID-era volatility, East and South Asian populations globally have elevated hemorrhagic stroke risk linked to hypertension that is often undetected. This trend is consistent with the underdiagnosis of hypertension flagged earlier.</div>
+</div>
+</section>
+
+<!-- NATIONAL COMPARISON -->
+<section class="section" id="national">
+<div class="container">
+  <div class="section-head">
+    <div class="eyebrow">National comparison · NHIS 2019</div>
+    <h2>Philadelphia vs the nation: what's different</h2>
+    <p>The 2019 National Health Interview Survey (n=31,997) provides national benchmarks. Most metrics are consistent with Philly data — but key divergences reveal what is city-specific versus a nationwide Asian health pattern.</p>
+  </div>
+  <div class="filter-tabs" id="nhis-tabs">
+    <button class="ftab active" onclick="showNHIS('chronic',this)">Chronic</button>
+    <button class="ftab" onclick="showNHIS('mental',this)">Mental health</button>
+    <button class="ftab" onclick="showNHIS('access',this)">Access</button>
+    <button class="ftab" onclick="showNHIS('nativity',this)">By nativity</button>
+  </div>
+  <div id="nhis-chronic">
+    <div class="chart-box">
+      <div class="chart-title">Chronic disease prevalence — national NHIS 2019 (%)</div>
+      <div class="chart-note">Survey-weighted population estimates</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="c-nhis-chronic"></canvas></div>
+    </div>
+  </div>
+  <div id="nhis-mental" style="display:none">
+    <div class="chart-box">
+      <div class="chart-title">Mental health — national NHIS 2019 (%)</div>
+      <div class="chart-note">Diagnosed = self-reported diagnosis. PHQ/GAD = standardized screener moderate/severe.</div>
+      <div class="chart-wrap" style="height:300px"><canvas id="c-nhis-mental"></canvas></div>
+    </div>
+  </div>
+  <div id="nhis-access" style="display:none">
+    <div class="chart-box">
+      <div class="chart-title">Healthcare access &amp; self-rated health — national NHIS 2019 (%)</div>
+      <div class="chart-note">Uninsured, no usual care source, fair/poor health rating</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="c-nhis-access"></canvas></div>
+    </div>
+  </div>
+  <div id="nhis-nativity" style="display:none">
+    <div class="cards">
+      <div class="card asian"><div class="card-label">US-born Asian hypertension</div><div class="card-val">15.9%</div><div class="card-sub">vs 24.7% foreign-born</div></div>
+      <div class="card"><div class="card-label">Foreign-born Asian diabetes</div><div class="card-val">10.3%</div><div class="card-sub">vs 4.7% US-born</div></div>
+      <div class="card asian"><div class="card-label">US-born Asian depression dx</div><div class="card-val">9.3%</div><div class="card-sub">vs 4.4% foreign-born (underreporting gap)</div></div>
+      <div class="card"><div class="card-label">Asian adults in US &lt;10 yrs: no usual care</div><div class="card-val">20.4%</div><div class="card-sub">vs 5.6% for 15+ year residents</div></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Key health metrics by years in US (Asian adults only · NHIS 2019)</div>
+      <div class="chart-note">Shows "unhealthy assimilation" — chronic disease worsens with longer US residence</div>
+      <div class="chart-wrap" style="height:280px"><canvas id="c-nativity"></canvas></div>
+    </div>
+    <div class="insight gold"><strong>The "unhealthy assimilation" gradient.</strong> Asian immigrants who have been in the US 15+ years have hypertension rates of 31.7% — nearly triple recent arrivals (11.3%). Diabetes follows the same arc (13.2% vs 6%). This is one of the most robust findings in immigrant health research and should shape how Philadelphia targets preventive care for long-established Asian communities.</div>
+  </div>
+</div>
+</section>
+
+<!-- GEOGRAPHY -->
+<section class="section" id="geography">
+<div class="container">
+  <div class="section-head">
+    <div class="eyebrow">Geography · 18 planning districts</div>
+    <h2>Where Asian Philadelphians live — and the social conditions there</h2>
+    <p>Asian population share varies enormously across Philadelphia's 18 planning districts. Two distinct patterns: established, relatively affluent enclaves and fast-growing working-class neighborhoods with higher poverty and uninsurance.</p>
+  </div>
+  <div class="grid2">
+    <div class="chart-box">
+      <div class="chart-title">Asian/PI population share by planning district (2023)</div>
+      <div class="chart-note">Blue = high share (&gt;10%), gray = mid (5–10%), light = low (&lt;5%)</div>
+      <div id="district-bars"></div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Growth: top 4 districts by Asian share change (2010→2023)</div>
+      <div class="chart-note">Upper Far Northeast and North Delaware show the fastest growth</div>
+      <div class="chart-wrap" style="height:300px"><canvas id="c-growth"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">SDOH profile of high-Asian districts (latest year)</div>
+    <div class="chart-note">District-wide poverty rate vs uninsurance rate. Bubble size = Asian population share.</div>
+    <div class="chart-wrap" style="height:320px"><canvas id="c-scatter"></canvas></div>
+  </div>
+  <div class="insight warn"><strong>Two very different Asian communities.</strong> South (6% poverty, 1.2% uninsured) and Central (11%, 2.8%) represent established, better-resourced enclaves. Central Northeast (18% poverty, 11% uninsured) and North Delaware (22%, 8%) — both with fast-growing Asian populations — are working-class neighborhoods with significantly higher need. A single "Asian health" policy approach misses this divide entirely.</div>
+</div>
+</section>
+
+<!-- FULL DATA TABLE -->
+<section class="section" id="full-data">
+<div class="container">
+  <div class="section-head">
+    <div class="eyebrow">Complete disparity data</div>
+    <h2>All 59 indicators from the Philadelphia racial disparity report</h2>
+    <p>PHMC Household Health Survey and Vital Statistics, 2014–2015. Filter by category.</p>
+  </div>
+  <div class="filter-tabs" id="rd-tabs">
+    <button class="ftab active" onclick="filterRD('all',this)">All</button>
+  </div>
+  <div style="overflow-x:auto">
+  <table class="data-table" id="rd-table">
+    <thead>
+      <tr>
+        <th>Indicator</th>
+        <th>Category</th>
+        <th>Year</th>
+        <th>Type</th>
+        <th>Total</th>
+        <th>Asian</th>
+        <th>White</th>
+        <th>Black</th>
+        <th>Hispanic</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+    <tbody id="rd-tbody"></tbody>
+  </table>
+  </div>
+</div>
+</section>
+
+</div><!-- /page-data -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: COMMUNITY ORGANIZATIONS
+════════════════════════════════════════════════════════ -->
+<div id="page-orgs" class="page">
+<div class="hero" style="padding:3.5rem 2rem 3rem">
+  <div class="hero-inner">
+    <div class="hero-tag">Community Resources</div>
+    <h1>Organizations serving <em>Asian communities</em> in Philadelphia</h1>
+    <p class="hero-sub">These organizations work at the intersection of health, language access, immigration, and civic power for Philadelphia's Asian American communities.</p>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:3rem 2rem;">
+  <div class="org-grid">
+
+    <div class="org-card">
+      <div class="org-header">
+        <div class="org-icon">S</div>
+        <div>
+          <div class="org-name">SEAMAAC</div>
+          <div class="org-full">Southeast Asian Mutual Assistance Association Coalition</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag health">Health &amp; wellness</span><span class="otag civic">Civic engagement</span><span class="otag imm">Refugee services</span></div>
+      <p class="org-desc">Founded in 1984, SEAMAAC is one of the oldest and largest refugee-founded agencies in Greater Philadelphia, serving thousands through programs in community development, hunger relief, education, and health — with language access across more than <strong>45 linguistic communities</strong>. Their Hansjörg Wyss Wellness Center, a partnership with Jefferson Health, provides comprehensive care to underserved communities in South Philadelphia.</p>
+      <div class="org-meta">
+        <span>📍 Bok Building, South Philadelphia</span>
+        <span>📞 215-467-0690</span>
+      </div>
+      <a href="https://seamaac.org" target="_blank" class="org-link">seamaac.org ↗</a>
+    </div>
+
+    <div class="org-card">
+      <div class="org-header">
+        <div class="org-icon" style="background:var(--gold-light);color:var(--gold)">P</div>
+        <div>
+          <div class="org-name">PCDC</div>
+          <div class="org-full">Philadelphia Chinatown Development Corporation</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag health">Mental health</span><span class="otag civic">Housing</span><span class="otag lang">Bilingual (EN/CN)</span></div>
+      <p class="org-desc">Established in 1966, PCDC is the only institution in Chinatown addressing urban renewal and affordable housing, advocating for over <strong>41,000 Chinese Americans</strong> in Philadelphia and serving more than 3,000 clients per year. Their Chinese Immigrant Families Wellness Initiative (CIFWI) provides tailored community mental health care, addresses systemic intergenerational trauma, and offers programming in English, Mandarin, and Cantonese.</p>
+      <div class="org-meta">
+        <span>📍 301–305 N. 9th St, Philadelphia, PA 19107</span>
+        <span>📞 215-922-6156</span>
+        <span>🕐 Mon–Fri, 8am–5pm</span>
+      </div>
+      <a href="https://chinatown-pcdc.org" target="_blank" class="org-link">chinatown-pcdc.org ↗</a>
+    </div>
+
+    <div class="org-card">
+      <div class="org-header">
+        <div class="org-icon" style="background:var(--teal-light);color:var(--teal)">P</div>
+        <div>
+          <div class="org-name">PASSi</div>
+          <div class="org-full">Penn Asian Senior Services</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag health">Senior care</span><span class="otag health">Primary care</span><span class="otag lang">19 languages</span></div>
+      <p class="org-desc">The largest provider of linguistically attuned senior services for Asian and limited English proficient older adults in Southeastern Pennsylvania. Since 2004, PASSi has matched seniors with home health aides sharing their cultural and linguistic background. <strong>85% of the seniors they serve have chronic illnesses</strong> requiring daily treatment. PASSi is working toward becoming a comprehensive healthcare hub for ~800 low-income seniors, including on-site primary care and mental health. Their Penn Asian Jubilee Center provides daily free transportation, health screenings, exercise, cultural programming, and a nutritious Asian lunch.</p>
+      <div class="org-meta">
+        <span>📍 6926 Old York Road, Philadelphia, PA 19126</span>
+        <span>📞 215-572-1234</span>
+      </div>
+      <a href="https://passi.us" target="_blank" class="org-link">passi.us ↗</a>
+    </div>
+
+    <div class="org-card">
+      <div class="org-header">
+        <div class="org-icon" style="background:#f5e0e0;color:#b83535">C</div>
+        <div>
+          <div class="org-name">CAGP</div>
+          <div class="org-full">Cambodian Association of Greater Philadelphia</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag civic">Advocacy</span><span class="otag imm">Southeast Asian</span><span class="otag health">Health access</span></div>
+      <p class="org-desc">CAGP improves quality of life for Cambodian Americans in the Greater Philadelphia Area through services, advocacy, and empowerment — ensuring equal access to social and economic development, quality healthcare, and education. Connected to SEAMAAC and the broader Southeast Asian community centered around FDR Park and the Southeast Asian market in South Philadelphia, an important node for food sovereignty and community health work.</p>
+      <div class="org-meta">
+        <span>📍 5412 N. 5th Street, Philadelphia, PA</span>
+        <span>📞 215-324-4070</span>
+      </div>
+      <a href="https://cagp.org" target="_blank" class="org-link">cagp.org ↗</a>
+    </div>
+
+    <div class="org-card">
+      <div class="org-header">
+        <div class="org-icon" style="background:#eeedfe;color:#534AB7">A</div>
+        <div>
+          <div class="org-name">API PA</div>
+          <div class="org-full">Asian Pacific Islander Political Alliance — Pennsylvania</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag civic">Political power</span><span class="otag lang">20 languages</span><span class="otag civic">Voter contact</span></div>
+      <p class="org-desc">API PA builds long-term power for Asian Pacific Islanders in Pennsylvania through political, electoral, and legislative work — with culturally competent, linguistically accessible direct voter contact and solidarity with aligned communities of color. In 2022, API PA ran <strong>the largest Asian American voter contact program in U.S. history</strong>, reaching community members in 20 languages. One of the most connected organizations in Philadelphia's Asian American civic landscape.</p>
+      <div class="org-meta">
+        <span>📍 Philadelphia, PA</span>
+      </div>
+      <a href="https://apipennsylvania.org" target="_blank" class="org-link">apipennsylvania.org ↗</a>
+    </div>
+
+    <div class="org-card">
+      <div class="org-header">
+        <div class="org-icon" style="background:var(--gold-light);color:var(--gold)">M</div>
+        <div>
+          <div class="org-name">MCAPAA</div>
+          <div class="org-full">Mayor's Commission on Asian Pacific American Affairs</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag civic">City government</span><span class="otag civic">Policy</span><span class="otag imm">Immigrant affairs</span></div>
+      <p class="org-desc">Composed of 25 professionals and community leaders representing the diversity of Philadelphia's Asian American population, MCAPAA advises the Mayor on issues important to Asian communities, ensures diversity within City policies, and helps Asian American organizations develop strategies that enhance the social, cultural, and economic status of the community. Operates as part of the <strong>Office of Immigrant Affairs</strong>, which also oversees language access for all City services.</p>
+      <div class="org-meta">
+        <span>📍 City of Philadelphia — Office of Immigrant Affairs</span>
+      </div>
+      <a href="https://phila.gov/departments/office-of-immigrant-affairs" target="_blank" class="org-link">phila.gov/immigrant-affairs ↗</a>
+    </div>
+
+    <div class="org-card">
+      <div class="org-header">
+        <div class="org-icon" style="background:var(--teal-light);color:var(--teal)">W</div>
+        <div>
+          <div class="org-name">The Welcoming Center</div>
+          <div class="org-full">Immigrant economic integration &amp; advocacy</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag imm">Immigrant services</span><span class="otag civic">Economic integration</span><span class="otag health">Health equity</span></div>
+      <p class="org-desc">Founded in 2003, The Welcoming Center opens doors of economic opportunity for immigrants of all education and skill levels, building immigrants' individual and collective agency to address barriers to integration and well-being. It sits at the intersection of immigrant services, civic engagement, and health equity — a key entry point for connecting with Philadelphia's broader immigrant support network.</p>
+      <div class="org-meta">
+        <span>📍 211 N. 13th Street, 4th Floor, Philadelphia, PA 19107</span>
+        <span>📞 215-557-2626</span>
+      </div>
+      <a href="https://welcomingcenter.org" target="_blank" class="org-link">welcomingcenter.org ↗</a>
+    </div>
+
+  </div><!-- /org-grid -->
+</div>
+</div><!-- /page-orgs -->
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: PENN RESOURCES
+════════════════════════════════════════════════════════ -->
+<div id="page-penn" class="page">
+<div class="hero" style="padding:3.5rem 2rem 3rem">
+  <div class="hero-inner">
+    <div class="hero-tag">University of Pennsylvania</div>
+    <h1>Penn resources for <em>Asian community</em> health</h1>
+    <p class="hero-sub">University of Pennsylvania programs, clinics, and partnerships with direct relevance to Asian American health access, oral health, mental health, and senior care in Philadelphia.</p>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto;padding:3rem 2rem;">
+  <div class="org-grid">
+
+    <div class="org-card penn-card">
+      <div class="penn-badge">Penn Dental Medicine</div>
+      <div class="org-header" style="margin-top:.75rem">
+        <div class="org-icon" style="background:#e8f0fb;color:#185FA5">D</div>
+        <div>
+          <div class="org-name">PennSmiles Mobile Dental Clinic</div>
+          <div class="org-full">Community oral health outreach</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag health">Oral health</span><span class="otag health">Children</span><span class="otag health">Mobile outreach</span></div>
+      <p class="org-desc">Penn Dental Medicine's mobile oral health program travels to schools, Head Start programs, and neighborhood sites providing dental exams, x-rays, cleanings, fluoride treatments, sealants, and basic fillings. <strong>500+ children served annually at 25+ schools</strong> — all third- and fourth-year dental students participate as part of their community health rotation. Currently serving West and Southwest Philadelphia, with expressed interest in <strong>expanding to South Philadelphia</strong> — making it a promising vehicle for outreach to Asian American communities.</p>
+      <div class="org-meta">
+        <span>📞 Outreach: 215-898-4971</span>
+        <span>📞 Appointments: 215-898-8965</span>
+        <span>📍 Currently: West &amp; Southwest Philadelphia</span>
+      </div>
+      <a href="https://dental.upenn.edu/community-care-programs" target="_blank" class="org-link">dental.upenn.edu/community-care ↗</a>
+    </div>
+
+    <div class="org-card penn-card">
+      <div class="penn-badge">Student Health &amp; Counseling</div>
+      <div class="org-header" style="margin-top:.75rem">
+        <div class="org-icon" style="background:#e8f0fb;color:#185FA5">W</div>
+        <div>
+          <div class="org-name">Wellness at Penn</div>
+          <div class="org-full">Student Health and Counseling</div>
+        </div>
+      </div>
+      <div class="org-tags"><span class="otag health">Mental health</span><span class="otag health">Primary care</span><span class="otag lang">Multilingual</span></div>
+      <p class="org-desc">The primary care and psychological care division of Wellness at Penn, providing safe, accessible, culturally sensitive, student-focused care — including mental health counseling, crisis management, and primary care services. Counseling is available in <strong>Mandarin, Cantonese, Spanish, and Korean</strong>. The division has a track record of programming specifically supporting Asian American student mental health. As an institutional partner, Wellness at Penn represents a model for broader wellness framing beyond clinical care — and a potential research and programming collaborator for community-facing work.</p>
+      <div class="org-meta">
+        <span>📍 3624 Market Street, First Floor West, Philadelphia, PA 19104</span>
+        <span>📞 215-746-WELL (9355) — available 24/7</span>
+      </div>
+      <a href="https://wellness.upenn.edu" target="_blank" class="org-link">wellness.upenn.edu ↗</a>
+    </div>
+
+    <div class="org-card penn-card" style="grid-column:1/-1">
+      <div class="penn-badge">Partnership Opportunity</div>
+      <div style="margin-top:1rem">
+        <div style="font-size:15px;font-weight:600;margin-bottom:.75rem">Penn + Community: Key connection points</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem">
+          <div class="connect-item">
+            <div class="connect-icon" style="background:#e8f0fb;color:#185FA5">↗</div>
+            <div class="connect-text"><strong>Jefferson Health × SEAMAAC</strong><br><span>The Hansjörg Wyss Wellness Center already demonstrates how Penn-adjacent health systems can partner with Asian-serving orgs. A similar model with Penn Medicine is achievable.</span></div>
+          </div>
+          <div class="connect-item">
+            <div class="connect-icon" style="background:var(--teal-light);color:var(--teal)">↗</div>
+            <div class="connect-text"><strong>PASSi × Primary care</strong><br><span>PASSi serves 800 seniors with chronic illness and is actively seeking an on-site primary care partner — a direct opportunity for Penn Medicine or Penn Dental outreach.</span></div>
+          </div>
+          <div class="connect-item">
+            <div class="connect-icon" style="background:var(--gold-light);color:var(--gold)">↗</div>
+            <div class="connect-text"><strong>PennSmiles → South Philly</strong><br><span>The mobile clinic's planned South Philadelphia expansion overlaps directly with SEAMAAC and PCDC's geographic footprint and client base.</span></div>
+          </div>
+          <div class="connect-item">
+            <div class="connect-icon" style="background:#f5e0e0;color:#b83535">↗</div>
+            <div class="connect-text"><strong>Mental health gap × PCDC CIFWI</strong><br><span>Asian depression diagnosis rates are 5–6% vs 29% for White adults — one of the starkest disparities in this report. PCDC's CIFWI is already doing this work and is a natural research partner.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /page-penn -->
+
+<footer>
+  <div class="fc">
+    <strong style="color:rgba(250,248,243,.7)">Asian Health in Philadelphia — Data Report</strong>
+    <div class="sources">
+      <strong style="color:rgba(250,248,243,.5)">Data sources:</strong><br>
+      Health of the City · Philadelphia Department of Public Health · 2012–2022<br>
+      National Health Interview Survey (NHIS) · National Center for Health Statistics · 2019 · n=31,997<br>
+      Racial Disparities in Philadelphia · PHMC Household Health Survey &amp; Vital Statistics · 2014–2015<br>
+      Vital Statistics Social Determinants of Health by Planning District · PDPH / OpenDataPhilly · 2010–2023
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────────
+const D = {
+  philly:{
+    hyp:{Asian:3.1,White:31.5,Black:46.0,Hispanic:19.6},
+    dm:{Asian:5.3,White:9.8,Black:17.9,Hispanic:5.6},
+    dep:{Asian:6.25,White:29.3,Black:23.2,Hispanic:29.6},
+    smoke:{Asian:9.6,White:18.8,Black:23.4,Hispanic:31.2},
+    hf_hosp:{Asian:17,White:50,Black:120,Hispanic:49},
+    htn_hosp:{Asian:2,White:4,Black:22,Hispanic:6},
+    dm_hosp:{Asian:10,White:28,Black:69,Hispanic:28},
+    prenatal:{Asian:12.93,White:6.75,Black:12.49,Hispanic:18.98},
+    preterm:{Asian:7.57,White:7.98,Black:14.81,Hispanic:10.18},
+    teen_births:{Asian:4.02,White:4.55,Black:21.64,Hispanic:37.62},
+    blood_lead:{Asian:0.46,White:7.56,Black:2.29,Hispanic:0.93},
+    suicidal:{Asian:23.5,White:36.0,Black:29.0,Hispanic:31.7},
+    smm:{Asian:20.6,White:12.9,Black:26.2,Hispanic:20.4},
+    grad:{Asian:92.8,White:84.5,Black:79.6,Hispanic:67.1},
+    hd_100k:{Asian:70.9,White:262.9,Black:285.6,Hispanic:64.3},
+    stroke_100k:{Asian:30.1,White:52.5,Black:56.8},
+  },
+  nhis:{
+    hyp:{Asian:22.9,White:32.9,Black:39.3,Hispanic:24.4},
+    dm:{Asian:9.2,White:8.7,Black:12.1,Hispanic:9.7},
+    dep:{Asian:5.2,White:18.0,Black:12.5,Hispanic:12.3},
+    anx:{Asian:4.0,White:16.5,Black:10.3,Hispanic:10.6},
+    phq:{Asian:2.3,White:7.3,Black:7.1,Hispanic:6.7},
+    gad:{Asian:3.0,White:6.4,Black:6.0,Hispanic:5.6},
+    smoke:{Asian:7.2,White:15.5,Black:14.9,Hispanic:8.8},
+    unins:{Asian:6.2,White:7.7,Black:12.0,Hispanic:27.6},
+    obese:{Asian:10.1,White:31.5,Black:40.8,Hispanic:35.8},
+    fp:{Asian:9.4,White:14.1,Black:20.2,Hispanic:17.3},
+    nocare:{Asian:9.8,White:9.0,Black:10.1,Hispanic:16.7},
+    heart:{Asian:2.8,White:5.3,Black:4.3,Hispanic:2.8},
+    arth:{Asian:10.4,White:24.9,Black:20.2,Hispanic:12.2},
+    copd:{Asian:1.2,White:5.6,Black:3.8,Hispanic:2.5},
+  },
+  nativity:{
+    groups:['US-born','<10 yrs','10–15 yrs','15+ yrs'],
+    hyp:[15.9,11.3,18.0,31.7],
+    dm:[4.7,6.0,5.1,13.2],
+    dep:[9.3,1.9,2.5,6.1],
+    nocare:[8.6,20.4,8.1,5.6],
+  },
+  pd:{
+    districts:['Upper Far Northeast','Central Northeast','South','North Delaware','Univ. Southwest','Central','Lower Northeast','Lower Southwest','Lower North','Lower South','Lower Far Northeast','Upper North','West Park','Lower Northwest','North','River Wards','Upper Northwest','West'],
+    asian:[19.1,15.8,15.4,11.5,11.4,10.0,7.2,6.0,6.0,5.8,5.8,5.5,4.4,3.5,2.8,2.7,1.6,1.5],
+    poverty:[11.4,18.3,16.1,21.8,27.2,11.0,26.2,27.4,34.5,6.0,9.7,21.5,22.2,8.3,40.3,19.7,19.2,29.2],
+    uninsured:[6.3,11.3,8.4,8.2,6.6,2.8,9.7,7.5,7.0,1.2,4.4,8.2,5.0,3.3,10.6,7.2,5.1,6.8],
+    growth:{
+      'Upper Far Northeast':{'2010':11.7,'2014':11.6,'2019':15.3,'2020':18.7,'2023':19.1},
+      'Central Northeast':{'2010':11.9,'2014':12.3,'2019':14.4,'2020':16.7,'2023':15.8},
+      'North Delaware':{'2010':3.9,'2014':4.2,'2019':7.3,'2020':8.8,'2023':11.5},
+      'South':{'2010':14.4,'2014':15.1,'2019':16.3,'2020':16.1,'2023':15.4},
+    }
+  },
+  rd:[{"cat":"Summary Health Measures","ind":"Years of Potential Life Lost Before Age 75","type":"Rate","year":"2014","note":"","tot":9003.8,"B":11271.7,"W":7608.8,"H":7321.0,"A":3040.9},{"cat":"Summary Health Measures","ind":"Life Expectancy in Years, Male","type":"Count","year":"2014","note":"","tot":70.3,"B":70.2,"W":74.6,"H":74.6,"A":87.5},{"cat":"Summary Health Measures","ind":"Life Expectancy in Years, Female","type":"Count","year":"2014","note":"","tot":79.6,"B":77.8,"W":80.7,"H":83.5,"A":92.1},{"cat":"Summary Health Measures","ind":"Poor or Fair Health","type":"Percentage","year":"2014/15","note":"Caution low sample size: Asian, non-Hispanic.","tot":0.236,"B":0.27,"W":0.18,"H":0.365,"A":0.093},{"cat":"Tobacco and Alcohol","ind":"Adult Smoking Prevalence","type":"Percentage","year":"2014/15","note":"Caution low sample size: Asian, non-Hispanic.","tot":0.224,"B":0.258,"W":0.214,"H":0.191,"A":0.091},{"cat":"Tobacco and Alcohol","ind":"Teen Tobacco Use, 9th-12th Grade","type":"Percentage","year":"2015","note":"","tot":0.276,"B":0.248,"W":0.348,"H":0.31,"A":0.145},{"cat":"Tobacco and Alcohol","ind":"Smoking-Attributable Mortality Rate per 100,000","type":"Rate","year":"2014","note":"","tot":468.0,"B":567.1,"W":427.4,"H":313.5,"A":68.6},{"cat":"Tobacco and Alcohol","ind":"Secondhand Smoke Exposure Among Children","type":"Percentage","year":"2014/15","note":"Data missing for some subgroups due to small sample.","tot":0.137,"B":0.152,"W":0.131,"H":0.107,"A":null},{"cat":"Tobacco and Alcohol","ind":"Adult Binge Drinking","type":"Percentage","year":"2012","note":"Data missing for some subgroups due to small sample.","tot":0.187,"B":0.142,"W":0.258,"H":0.221,"A":null},{"cat":"Tobacco and Alcohol","ind":"Teen Excessive Drinking, 9th-12th Grade","type":"Percentage","year":"2015","note":"","tot":0.108,"B":0.076,"W":0.172,"H":0.144,"A":0.056},{"cat":"Obesity","ind":"Child Obesity, Male, 5-18 Years","type":"Percentage","year":"2014/15","note":"","tot":0.209,"B":0.229,"W":0.187,"H":0.267,"A":0.159},{"cat":"Obesity","ind":"Child Obesity, Female, 5-18 Years","type":"Percentage","year":"2014/15","note":"","tot":0.17,"B":0.217,"W":0.135,"H":0.195,"A":0.085},{"cat":"Obesity","ind":"Adult Obesity Prevalence","type":"Percentage","year":"2014/15","note":"Caution low sample size: Asian, non-Hispanic.","tot":0.298,"B":0.381,"W":0.254,"H":0.302,"A":0.098},{"cat":"Obesity","ind":"Adults Drinking ≥1 Sugary Drink Daily","type":"Percentage","year":"2014/15","note":"","tot":0.27,"B":0.327,"W":0.156,"H":0.319,"A":0.197},{"cat":"Obesity","ind":"Teens Drinking ≥1 Soda Daily","type":"Percentage","year":"2015","note":"","tot":0.244,"B":0.269,"W":0.174,"H":0.335,"A":0.127},{"cat":"Cardiovascular Disease and Diabetes","ind":"Premature CVD Mortality Rate per 100,000","type":"Rate","year":"2014","note":"","tot":null,"B":null,"W":null,"H":null,"A":null},{"cat":"Cardiovascular Disease and Diabetes","ind":"Adult Hypertension Prevalence","type":"Percentage","year":"2014/15","note":"Caution low sample size: Asian, non-Hispanic.","tot":0.301,"B":0.363,"W":0.265,"H":0.199,"A":0.117},{"cat":"Cardiovascular Disease and Diabetes","ind":"Adult Diabetes Prevalence","type":"Percentage","year":"2014/15","note":"Caution low sample size: Asian, non-Hispanic.","tot":0.096,"B":0.131,"W":0.072,"H":0.086,"A":0.075},{"cat":"HIV","ind":"New HIV Diagnoses per 100,000","type":"Rate","year":"2014","note":"","tot":40.3,"B":76.0,"W":13.7,"H":41.6,"A":10.5},{"cat":"HIV","ind":"HIV Diagnoses from Male-to-Male Contact","type":"Percentage","year":"2014","note":"","tot":null,"B":null,"W":null,"H":null,"A":0.7},{"cat":"HIV","ind":"HIV Diagnoses from Heterosexual Contact","type":"Percentage","year":"2014","note":"","tot":null,"B":null,"W":null,"H":null,"A":0.3},{"cat":"HIV","ind":"HIV Diagnoses from Injection Drug Use","type":"Percentage","year":"2014","note":"","tot":null,"B":null,"W":null,"H":null,"A":0.0},{"cat":"HIV","ind":"Retention in HIV/AIDS Care","type":"Percentage","year":"2014","note":"","tot":0.85,"B":0.86,"W":0.88,"H":0.83,"A":0.592},{"cat":"HIV","ind":"Viral Suppression","type":"Percentage","year":"2014","note":"","tot":0.817,"B":0.822,"W":0.861,"H":0.817,"A":0.619},{"cat":"HIV","ind":"Adults Never Tested for HIV, 18-39","type":"Percentage","year":"2014/15","note":"","tot":0.428,"B":0.315,"W":0.472,"H":0.472,"A":0.525},{"cat":"Teen Sexual Health","ind":"Teens Currently Sexually Active","type":"Percentage","year":"2015","note":"","tot":0.317,"B":0.387,"W":0.278,"H":0.323,"A":0.158},{"cat":"Teen Sexual Health","ind":"Teen Births per 1,000 Girls 15-19","type":"Rate","year":"2014","note":"","tot":20.0,"B":23.8,"W":4.1,"H":30.3,"A":8.0},{"cat":"Maternal and Infant Health","ind":"Infant Mortality Rate per 1,000 Live Births","type":"Rate","year":"2014","note":"","tot":8.6,"B":13.3,"W":3.9,"H":4.1,"A":null},{"cat":"Maternal and Infant Health","ind":"Low Birth Weight Births","type":"Percentage","year":"2014","note":"","tot":0.099,"B":0.131,"W":0.066,"H":0.077,"A":0.065},{"cat":"Maternal and Infant Health","ind":"Late or No Prenatal Care","type":"Percentage","year":"2014","note":"","tot":0.137,"B":0.149,"W":0.063,"H":0.172,"A":0.109},{"cat":"Maternal and Infant Health","ind":"Breastfeeding Initiation","type":"Percentage","year":"2014/15","note":"","tot":0.761,"B":0.696,"W":0.884,"H":0.765,"A":0.853},{"cat":"Child Health","ind":"Childhood Immunizations, 19-35 Months","type":"Percentage","year":"2015","note":"","tot":0.748,"B":0.749,"W":0.759,"H":0.75,"A":0.777},{"cat":"Child Health","ind":"Asthma Hospitalization Rate per 10,000 Children","type":"Rate","year":"2014","note":"","tot":129.5,"B":199.4,"W":50.2,"H":116.7,"A":19.3},{"cat":"Child Health","ind":"Child Mortality Rate per 100,000","type":"Rate","year":"2014","note":"","tot":null,"B":null,"W":null,"H":null,"A":null},{"cat":"Access to Care","ind":"Adults Without Insurance, 18-64","type":"Percentage","year":"2014/15","note":"","tot":0.133,"B":0.113,"W":0.082,"H":0.243,"A":0.079},{"cat":"Access to Care","ind":"Children Without Insurance","type":"Percentage","year":"2014/15","note":"","tot":0.072,"B":0.065,"W":0.051,"H":0.098,"A":0.083},{"cat":"Access to Care","ind":"Adults Covered by Medicaid, 18-64","type":"Percentage","year":"2014/15","note":"","tot":0.248,"B":0.327,"W":0.138,"H":0.323,"A":0.19},{"cat":"Access to Care","ind":"Adults Forgoing Care Due to Cost","type":"Percentage","year":"2014/15","note":"","tot":0.148,"B":0.153,"W":0.099,"H":0.185,"A":0.137},{"cat":"Access to Care","ind":"Ambulatory Care Sensitive Hospitalization per 100,000","type":"Rate","year":"2014","note":"","tot":496.0,"B":736.0,"W":233.0,"H":390.0,"A":218.0},{"cat":"Access to Care","ind":"Children with Dental Visit in Past Year","type":"Percentage","year":"2014/15","note":"","tot":0.88,"B":0.878,"W":0.921,"H":0.856,"A":0.89},{"cat":"Cancer Screening and Prevention","ind":"Cancer Mortality per 100,000","type":"Rate","year":"2014","note":"","tot":205.0,"B":231.0,"W":194.2,"H":104.4,"A":96.3},{"cat":"Cancer Screening and Prevention","ind":"Adults with Colonoscopy/Sigmoidoscopy, 50-74","type":"Percentage","year":"2014/15","note":"","tot":0.623,"B":0.604,"W":0.712,"H":0.514,"A":0.771},{"cat":"Cancer Screening and Prevention","ind":"Women with Mammography in Past 2 Years, 50-74","type":"Percentage","year":"2014/15","note":"","tot":0.808,"B":0.834,"W":0.864,"H":0.756,"A":0.898},{"cat":"Cancer Screening and Prevention","ind":"Girls Completing HPV Vaccine, 13-17","type":"Percentage","year":"2015","note":"","tot":0.5,"B":0.532,"W":0.552,"H":0.508,"A":0.613},{"cat":"Violence","ind":"Homicide Mortality Rate per 100,000","type":"Rate","year":"2014","note":"","tot":17.1,"B":35.7,"W":3.6,"H":13.3,"A":2.0},{"cat":"Violence","ind":"Firearm Homicide Rate per 100,000","type":"Rate","year":"2014","note":"","tot":14.2,"B":30.1,"W":2.5,"H":11.1,"A":0.0},{"cat":"Mental Health and Substance Abuse","ind":"Suicide Mortality Rate per 100,000","type":"Rate","year":"2014","note":"","tot":8.1,"B":5.3,"W":12.2,"H":4.2,"A":4.1},{"cat":"Mental Health and Substance Abuse","ind":"Teens Considering Suicide in Past Year","type":"Percentage","year":"2015","note":"","tot":0.157,"B":0.133,"W":0.204,"H":0.181,"A":0.098},{"cat":"Mental Health and Substance Abuse","ind":"Adults with Diagnosed Mental Health Condition","type":"Percentage","year":"2014/15","note":"","tot":0.135,"B":0.133,"W":0.183,"H":0.063,"A":0.007},{"cat":"Mental Health and Substance Abuse","ind":"Opioid-Related Mortality per 100,000","type":"Rate","year":"2014","note":"","tot":17.8,"B":12.2,"W":28.7,"H":8.7,"A":7.0},{"cat":"Built Environment","ind":"Limited Access to Healthy Foods","type":"Percentage","year":"2014/15","note":"","tot":0.148,"B":0.217,"W":0.057,"H":0.151,"A":0.03},{"cat":"Built Environment","ind":"Access to Parks or Outdoor Space","type":"Percentage","year":"2014/15","note":"","tot":0.821,"B":0.802,"W":0.893,"H":0.86,"A":0.757},{"cat":"Social Determinants of Health","ind":"Proficient ELA Achievement in 4th Grade","type":"Percentage","year":"2015","note":"","tot":0.235,"B":0.115,"W":0.475,"H":0.15,"A":0.517},{"cat":"Social Determinants of Health","ind":"On-Time High School Graduation","type":"Percentage","year":"2014/15","note":"","tot":0.659,"B":0.594,"W":0.82,"H":0.6,"A":0.799},{"cat":"Social Determinants of Health","ind":"Adults Completing Some College, ≥25","type":"Percentage","year":"2014/15","note":"","tot":0.496,"B":0.44,"W":0.616,"H":0.316,"A":0.527},{"cat":"Social Determinants of Health","ind":"Unemployment, ≥16 Years","type":"Percentage","year":"2014/15","note":"","tot":0.114,"B":0.149,"W":0.072,"H":0.114,"A":0.105},{"cat":"Social Determinants of Health","ind":"Philadelphians Living in Poverty","type":"Percentage","year":"2014/15","note":"","tot":0.268,"B":0.31,"W":0.138,"H":0.347,"A":0.263},{"cat":"Social Determinants of Health","ind":"Children Living in Poverty","type":"Percentage","year":"2014/15","note":"","tot":0.378,"B":0.444,"W":0.186,"H":0.45,"A":0.349},{"cat":"Social Determinants of Health","ind":"Social Capital Index","type":"Percentage","year":"2014/15","note":"","tot":0.525,"B":0.488,"W":0.583,"H":0.497,"A":0.477}]
+};
+
+const RC = {Asian:'var(--asian)',White:'var(--white-r)',Black:'var(--black-r)',Hispanic:'var(--hisp)','City':'var(--city)','Asian/PI':'var(--asian)'};
+const charts = {};
+
+function hbar(id, data, maxVal) {
+  const labels = Object.keys(data);
+  const vals = Object.values(data);
+  const max = maxVal || Math.max(...vals.filter(v=>v!=null))*1.15;
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{labels, datasets:[{data:vals, backgroundColor:labels.map(l=>RC[l]||'#888'), borderRadius:4}]},
+    options:{indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{max,ticks:{color:'#888',font:{size:11}},grid:{color:'rgba(0,0,0,.06)'}},
+              y:{ticks:{color:'#555',font:{size:11}},grid:{display:false}}}}
+  });
+}
+
+function groupBar(id, labels, datasets, yMax) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{labels, datasets},
+    options:{responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#888',font:{size:10}},grid:{display:false}},
+              y:{max:yMax, ticks:{color:'#888',font:{size:11}},grid:{color:'rgba(0,0,0,.06)'}}}}
+  });
+}
+
+function lineChart(id, years, datasets) {
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), {
+    type:'line',
+    data:{labels:years, datasets},
+    options:{responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'right',labels:{font:{size:10},boxWidth:10,padding:5}}},
+      scales:{x:{ticks:{color:'#888',font:{size:11}},grid:{display:false}},
+              y:{ticks:{color:'#888',font:{size:11}},grid:{color:'rgba(0,0,0,.06)'}}}}
+  });
+}
+
+// ── BUILD CHARTS ─────────────────────────────────────────────────────────────
+
+// Chronic
+hbar('c-hyp', D.philly.hyp, 60);
+hbar('c-dm', D.philly.dm, 25);
+
+groupBar('c-hosp',
+  ['Heart failure /10k','Hypertension /10k','Diabetes /10k'],
+  [
+    {label:'Asian',    data:[17,2,10],  backgroundColor:'rgba(27,107,95,.85)',  borderRadius:3},
+    {label:'White',    data:[50,4,28],  backgroundColor:'rgba(90,106,122,.7)',   borderRadius:3},
+    {label:'Black',    data:[120,22,69],backgroundColor:'rgba(184,53,53,.85)',  borderRadius:3},
+    {label:'Hispanic', data:[49,6,28],  backgroundColor:'rgba(200,146,42,.85)', borderRadius:3},
+  ], 135
+);
+
+hbar('c-smoke', D.philly.smoke, 40);
+
+// Mental health
+groupBar('c-dep',
+  ['Diagnosed dep\n(Philly)','Diagnosed dep\n(NHIS)','PHQ-8 mod/sev\n(NHIS)'],
+  [
+    {label:'Asian', data:[6.25,5.2,2.3], backgroundColor:'rgba(27,107,95,.85)', borderRadius:3},
+    {label:'White', data:[29.3,18.0,7.3], backgroundColor:'rgba(90,106,122,.7)',  borderRadius:3},
+    {label:'Black', data:[23.2,12.5,7.1], backgroundColor:'rgba(184,53,53,.85)', borderRadius:3},
+    {label:'Hispanic',data:[29.6,12.3,6.7],backgroundColor:'rgba(200,146,42,.85)',borderRadius:3},
+  ], 35
+);
+hbar('c-suicide', D.philly.suicidal, 45);
+
+// Maternal
+groupBar('c-maternal',
+  ['Late/no prenatal care (%)','Preterm births (%)','Severe mat. morbidity (/10k)'],
+  [
+    {label:'Asian/PI',data:[12.93,7.57,20.6],backgroundColor:'rgba(27,107,95,.85)', borderRadius:3},
+    {label:'White',   data:[6.75,7.98,12.9], backgroundColor:'rgba(90,106,122,.7)',  borderRadius:3},
+    {label:'Black',   data:[12.49,14.81,26.2],backgroundColor:'rgba(184,53,53,.85)', borderRadius:3},
+    {label:'Hispanic',data:[18.98,10.18,20.4],backgroundColor:'rgba(200,146,42,.85)',borderRadius:3},
+  ], 30
+);
+groupBar('c-child',
+  ['Blood lead positive (%)','Teen births /1000','Grad rate (%)÷10'],
+  [
+    {label:'Asian',   data:[0.46,4.02,9.28], backgroundColor:'rgba(27,107,95,.85)', borderRadius:3},
+    {label:'White',   data:[7.56,4.55,8.45], backgroundColor:'rgba(90,106,122,.7)',  borderRadius:3},
+    {label:'Black',   data:[2.29,21.64,7.96],backgroundColor:'rgba(184,53,53,.85)', borderRadius:3},
+    {label:'Hispanic',data:[0.93,37.62,6.71],backgroundColor:'rgba(200,146,42,.85)',borderRadius:3},
+  ], 45
+);
+
+// Cardiovascular
+hbar('c-hd', D.philly.hd_100k, 320);
+hbar('c-stroke', D.philly.stroke_100k, 65);
+groupBar('c-cvhosp',
+  ['Heart failure /10k','Hypertension /10k','Diabetes /10k'],
+  [
+    {label:'Asian',   data:[17,2,10],  backgroundColor:'rgba(27,107,95,.85)', borderRadius:3},
+    {label:'White',   data:[50,4,28],  backgroundColor:'rgba(90,106,122,.7)',  borderRadius:3},
+    {label:'Black',   data:[120,22,69],backgroundColor:'rgba(184,53,53,.85)', borderRadius:3},
+    {label:'Hispanic',data:[49,6,28],  backgroundColor:'rgba(200,146,42,.85)',borderRadius:3},
+  ], 135
+);
+
+// NHIS chronic (built on demand)
+function buildNHISChronic() {
+  if (charts['c-nhis-chronic']) return;
+  groupBar('c-nhis-chronic',
+    ['Hypertension','Diabetes','Heart disease','COPD','Arthritis','Obese'],
+    [
+      {label:'Asian',   data:[22.9,9.2,2.8,1.2,10.4,10.1],  backgroundColor:'rgba(27,107,95,.85)', borderRadius:3},
+      {label:'White',   data:[32.9,8.7,5.3,5.6,24.9,31.5],  backgroundColor:'rgba(90,106,122,.7)',  borderRadius:3},
+      {label:'Black',   data:[39.3,12.1,4.3,3.8,20.2,40.8], backgroundColor:'rgba(184,53,53,.85)', borderRadius:3},
+      {label:'Hispanic',data:[24.4,9.7,2.8,2.5,12.2,35.8],  backgroundColor:'rgba(200,146,42,.85)',borderRadius:3},
+    ], 55
+  );
+}
+function buildNHISMental() {
+  if (charts['c-nhis-mental']) return;
+  groupBar('c-nhis-mental',
+    ['Dep. diagnosed','Anx. diagnosed','PHQ-8 mod/sev','GAD-7 mod/sev'],
+    [
+      {label:'Asian',   data:[5.2,4.0,2.3,3.0],  backgroundColor:'rgba(27,107,95,.85)', borderRadius:3},
+      {label:'White',   data:[18.0,16.5,7.3,6.4], backgroundColor:'rgba(90,106,122,.7)',  borderRadius:3},
+      {label:'Black',   data:[12.5,10.3,7.1,6.0], backgroundColor:'rgba(184,53,53,.85)', borderRadius:3},
+      {label:'Hispanic',data:[12.3,10.6,6.7,5.6], backgroundColor:'rgba(200,146,42,.85)',borderRadius:3},
+    ], 22
+  );
+}
+function buildNHISAccess() {
+  if (charts['c-nhis-access']) return;
+  groupBar('c-nhis-access',
+    ['Uninsured (%)','No usual care (%)','Fair/poor health (%)'],
+    [
+      {label:'Asian',   data:[6.2,9.8,9.4],  backgroundColor:'rgba(27,107,95,.85)', borderRadius:3},
+      {label:'White',   data:[7.7,9.0,14.1], backgroundColor:'rgba(90,106,122,.7)',  borderRadius:3},
+      {label:'Black',   data:[12.0,10.1,20.2],backgroundColor:'rgba(184,53,53,.85)', borderRadius:3},
+      {label:'Hispanic',data:[27.6,16.7,17.3],backgroundColor:'rgba(200,146,42,.85)',borderRadius:3},
+    ], 32
+  );
+}
+function buildNativity() {
+  if (charts['c-nativity']) return;
+  const yrs = ['US-born','<10 yrs','10–15 yrs','15+ yrs'];
+  lineChart('c-nativity', yrs, [
+    {label:'Hypertension (%)', data:[15.9,11.3,18.0,31.7], borderColor:'#b83535', backgroundColor:'#b8353520', borderWidth:2, pointRadius:4, tension:.3},
+    {label:'Diabetes (%)',     data:[4.7,6.0,5.1,13.2],   borderColor:'#c8922a', backgroundColor:'#c8922a20', borderWidth:2, pointRadius:4, tension:.3},
+    {label:'Depression dx (%)',data:[9.3,1.9,2.5,6.1],   borderColor:'#1b6b5f', backgroundColor:'#1b6b5f20', borderWidth:2, pointRadius:4, tension:.3},
+    {label:'No usual care (%)',data:[8.6,20.4,8.1,5.6],  borderColor:'#5a6a7a', backgroundColor:'#5a6a7a20', borderWidth:2, pointRadius:4, tension:.3},
+  ]);
+}
+
+buildNHISChronic();
+
+function showNHIS(tab, btn) {
+  ['chronic','mental','access','nativity'].forEach(t => {
+    document.getElementById('nhis-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('#nhis-tabs .ftab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if (tab==='chronic') buildNHISChronic();
+  if (tab==='mental') buildNHISMental();
+  if (tab==='access') buildNHISAccess();
+  if (tab==='nativity') buildNativity();
+}
+
+// Geography
+function buildDistrictBars() {
+  const container = document.getElementById('district-bars');
+  const max = Math.max(...D.pd.asian);
+  D.pd.districts.forEach((d,i) => {
+    const v = D.pd.asian[i];
+    const pct = (v/max*100).toFixed(1);
+    const color = v>=10 ? 'var(--asian)' : v>=5 ? 'rgba(27,107,95,.5)' : 'rgba(27,107,95,.25)';
+    container.innerHTML += `<div class="district-row">
+      <div class="district-name">${d}</div>
+      <div class="district-track"><div class="district-fill" style="width:${pct}%;background:${color}"></div></div>
+      <div class="district-val">${v}%</div>
+    </div>`;
+  });
+}
+buildDistrictBars();
+
+// Growth chart
+const growthColors = ['#1b6b5f','#b83535','#c8922a','#5a6a7a'];
+const growthYears = ['2010','2014','2019','2020','2023'];
+lineChart('c-growth', growthYears, Object.entries(D.pd.growth).map(([name,data],i)=>({
+  label:name, data:growthYears.map(y=>data[y]),
+  borderColor:growthColors[i], backgroundColor:growthColors[i]+'20',
+  borderWidth:2, pointRadius:4, tension:.3, spanGaps:true
+})));
+
+// Scatter (bubble)
+if (charts['c-scatter']) charts['c-scatter'].destroy();
+charts['c-scatter'] = new Chart(document.getElementById('c-scatter'), {
+  type:'bubble',
+  data:{datasets:[{
+    data: D.pd.districts.map((d,i)=>({
+      x:D.pd.poverty[i], y:D.pd.uninsured[i], r:Math.max(4, D.pd.asian[i]*0.6),
+      label:d
+    })),
+    backgroundColor: D.pd.districts.map((_,i)=> D.pd.asian[i]>=10 ? 'rgba(27,107,95,.7)' : D.pd.asian[i]>=5 ? 'rgba(27,107,95,.35)' : 'rgba(27,107,95,.15)'),
+    borderColor: 'rgba(27,107,95,.8)',
+  }]},
+  options:{responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{display:false}, tooltip:{callbacks:{label:(ctx)=>{
+      const d=ctx.raw; return `${d.label}: poverty ${d.x}%, uninsured ${d.y}%, Asian ${(d.r/0.6).toFixed(1)}%`;
+    }}}},
+    scales:{
+      x:{title:{display:true,text:'Poverty rate (%)',color:'#888',font:{size:11}},ticks:{color:'#888',font:{size:11}},grid:{color:'rgba(0,0,0,.06)'}},
+      y:{title:{display:true,text:'Uninsured (%)',color:'#888',font:{size:11}},ticks:{color:'#888',font:{size:11}},grid:{color:'rgba(0,0,0,.06)'}},
+    }
+  }
+});
+
+// ── FULL DATA TABLE ───────────────────────────────────────────────────────────
+const cats = [...new Set(D.rd.map(r=>r.cat))];
+const tabsEl = document.getElementById('rd-tabs');
+cats.forEach(cat => {
+  tabsEl.innerHTML += `<button class="ftab" onclick="filterRD('${cat.replace(/[^a-z0-9]/gi,'_')}',this)">${cat}</button>`;
+});
+
+function fmt(v, type) {
+  if (v===null || v===undefined) return '<span style="color:#ccc">—</span>';
+  if (type==='Percentage') return (v*100).toFixed(1)+'%';
+  if (type==='Rate') return v.toLocaleString();
+  return v;
+}
+
+function filterRD(cat, btn) {
+  document.querySelectorAll('#rd-tabs .ftab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = cat==='all' ? D.rd : D.rd.filter(r=>r.cat.replace(/[^a-z0-9]/gi,'_')===cat);
+  const tbody = document.getElementById('rd-tbody');
+  tbody.innerHTML = rows.map(r => {
+    const vals = [r.A,r.W,r.B,r.H].filter(v=>v!=null);
+    const isGood = v => r.ind.includes('Expectancy')||r.ind.includes('Graduation')||r.ind.includes('Breastfeed')||r.ind.includes('Immunization')||r.ind.includes('Mammography')||r.ind.includes('Colonoscopy')||r.ind.includes('Retention');
+    const asianBest = r.A!=null && vals.length>1 && (isGood(r) ? r.A===Math.max(...vals) : r.A===Math.min(...vals));
+    const asianWorst = r.A!=null && vals.length>1 && (isGood(r) ? r.A===Math.min(...vals) : r.A===Math.max(...vals));
+    const asianClass = asianBest ? 'tag-best' : asianWorst ? 'tag-worst' : '';
+    return `<tr>
+      <td style="font-size:12px;max-width:240px">${r.ind}</td>
+      <td style="font-size:11px;color:#aaa">${r.cat}</td>
+      <td style="font-size:11px;color:#aaa">${r.year}</td>
+      <td style="font-size:11px;color:#aaa">${r.type}</td>
+      <td>${fmt(r.tot,r.type)}</td>
+      <td class="${asianClass}">${fmt(r.A,r.type)}</td>
+      <td>${fmt(r.W,r.type)}</td>
+      <td>${fmt(r.B,r.type)}</td>
+      <td>${fmt(r.H,r.type)}</td>
+      <td style="font-size:10px;color:#bbb;max-width:160px">${r.note||''}</td>
+    </tr>`;
+  }).join('');
+}
+filterRD('all', document.querySelector('#rd-tabs .ftab'));
+
+// ── NAV ACTIVE STATE ──────────────────────────────────────────────────────────
+const sections = document.querySelectorAll('[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', ()=>{
+  if (!document.getElementById('page-data').classList.contains('active')) return;
+  let current='';
+  sections.forEach(s=>{ if(window.scrollY>=s.offsetTop-120) current=s.id; });
+  navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+current); });
+});
+
+// ── PAGE SWITCHING ────────────────────────────────────────────────────────────
+function showPage(name) {
+  ['data','orgs','penn'].forEach(p => {
+    document.getElementById('page-'+p).classList.toggle('active', p===name);
+  });
+  document.querySelectorAll('.nav-page').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(
+      name==='data' ? 'data' : name==='orgs' ? 'org' : 'penn'
+    ));
+  });
+  document.getElementById('data-subnav').style.display = name==='data' ? 'flex' : 'none';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
