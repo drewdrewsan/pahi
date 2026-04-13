@@ -153,11 +153,99 @@ footer .sources { margin-top:1rem; line-height:1.9; }
 
 @media(max-width:720px) {
   .grid2, .grid3 { grid-template-columns:1fr; }
-  .org-grid { grid-template-columns:1fr; }
   .district-name { width:110px; }
   .hero { padding:3rem 1.25rem 2.5rem; }
   .section { padding:2.5rem 1.25rem; }
   .nav-pages { border-right:none; margin-right:0; padding-right:0; }
+}
+
+/* ═══════════════════════════════════════════
+   ORG & PENN PAGE STYLES
+═══════════════════════════════════════════ */
+.page-hero { background:var(--ink); padding:4rem 2rem 3rem; position:relative; overflow:hidden; }
+.page-hero::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,146,42,.05) 80px),repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,146,42,.05) 80px); }
+.page-hero-inner { max-width:1100px; margin:0 auto; position:relative; }
+.page-hero-tag { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+.page-hero h1 { font-family:'DM Serif Display',serif; font-size:clamp(2rem,4vw,3.2rem); color:var(--paper); line-height:1.15; margin-bottom:1rem; }
+.page-hero h1 em { font-style:italic; color:var(--gold); }
+.page-hero p { color:rgba(250,248,243,.6); font-size:15px; max-width:580px; line-height:1.7; }
+.page-hero-stats { display:flex; flex-wrap:wrap; gap:2rem; margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(200,146,42,.15); }
+.page-hero-stat .n { font-family:'DM Serif Display',serif; font-size:2.4rem; color:var(--gold); line-height:1; }
+.page-hero-stat .l { font-size:11px; color:rgba(250,248,243,.45); margin-top:3px; max-width:130px; }
+
+.page-body { max-width:1100px; margin:0 auto; padding:3rem 2rem 5rem; }
+
+/* Filter bar */
+.fbar { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:2.5rem; }
+.fbar-label { font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); margin-bottom:.6rem; width:100%; }
+.fpill { font-size:12px; padding:6px 16px; border-radius:20px; border:1.5px solid var(--border); background:transparent; color:var(--slate); cursor:pointer; transition:all .18s; font-weight:500; }
+.fpill.active, .fpill:hover { background:var(--teal); color:white; border-color:var(--teal); }
+
+/* Org grid */
+.org-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.5rem; }
+
+/* Org card */
+.ocard { background:white; border-radius:14px; border:1px solid var(--border); overflow:hidden; display:flex; flex-direction:column; transition:transform .2s, box-shadow .2s; }
+.ocard:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,0,0,.09); }
+.ocard-accent { height:4px; width:100%; }
+.ocard-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; gap:1rem; }
+.ocard-header { display:flex; align-items:center; gap:1rem; }
+.ocard-logo { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; letter-spacing:-.3px; flex-shrink:0; font-family:'DM Serif Display',serif; }
+.ocard-titles {}
+.ocard-name { font-size:16px; font-weight:600; color:var(--ink); line-height:1.2; }
+.ocard-sub { font-size:12px; color:var(--slate); margin-top:2px; line-height:1.4; }
+.ocard-tags { display:flex; flex-wrap:wrap; gap:5px; }
+.otag { font-size:10.5px; padding:3px 10px; border-radius:20px; font-weight:500; letter-spacing:.01em; }
+.otag-teal { background:#d4ede9; color:#085041; }
+.otag-gold { background:#f5e8cc; color:#633806; }
+.otag-blue { background:#e6f1fb; color:#0c447c; }
+.otag-red  { background:#f5e0e0; color:#791f1f; }
+.otag-purple { background:#eeedfe; color:#3c3489; }
+.otag-gray { background:#f0efe8; color:#444; }
+.ocard-desc { font-size:13.5px; color:#444; line-height:1.75; flex:1; }
+.ocard-desc strong { color:var(--ink); }
+.ocard-desc em { color:var(--slate); font-style:italic; }
+.ocard-detail { background:#f8f7f2; border-radius:8px; padding:.75rem 1rem; font-size:12px; display:flex; flex-direction:column; gap:.4rem; }
+.ocard-detail-row { display:flex; gap:.75rem; }
+.ocd-label { font-weight:600; color:var(--ink); min-width:90px; flex-shrink:0; }
+.ocd-val { color:var(--slate); }
+.ocard-meta { font-size:11.5px; color:#999; display:flex; flex-direction:column; gap:3px; }
+.ocard-footer { padding:.9rem 1.5rem; border-top:1px solid var(--border); background:#faf9f5; display:flex; align-items:center; justify-content:space-between; }
+.ocard-link { font-size:12px; font-weight:600; color:var(--teal); text-decoration:none; display:flex; align-items:center; gap:4px; transition:gap .15s; }
+.ocard-link:hover { gap:8px; }
+.ocard-link::after { content:'→'; }
+.ocard-data-tag { font-size:10px; padding:2px 8px; border-radius:12px; font-weight:600; }
+
+/* Penn cards */
+.penn-section-head { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; margin-top:2.5rem; }
+.penn-section-head::after { content:''; flex:1; height:1px; background:var(--gold-light); }
+.penn-card-wrap { background:white; border-radius:14px; border:1px solid var(--border); border-top:3px solid #185fa5; overflow:hidden; transition:transform .2s, box-shadow .2s; }
+.penn-card-wrap:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,0,0,.09); }
+.penn-card-inner { padding:1.5rem; }
+.penn-badge { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#185fa5; margin-bottom:1rem; display:flex; align-items:center; gap:.5rem; }
+.penn-badge::before { content:''; width:20px; height:2px; background:#185fa5; border-radius:2px; }
+.penn-header { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
+.penn-logo { width:52px; height:52px; border-radius:12px; background:#e8f0fb; color:#185fa5; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; letter-spacing:-.5px; flex-shrink:0; font-family:'DM Serif Display',serif; }
+.penn-name { font-size:16px; font-weight:600; color:var(--ink); line-height:1.2; }
+.penn-sub { font-size:12px; color:var(--slate); margin-top:2px; }
+.penn-desc { font-size:13.5px; color:#444; line-height:1.75; }
+.penn-desc strong { color:var(--ink); }
+.penn-detail { background:#f0f5fb; border-radius:8px; padding:.75rem 1rem; font-size:12px; margin-top:1rem; display:flex; flex-direction:column; gap:.4rem; }
+.penn-footer { padding:.9rem 1.5rem; border-top:1px solid var(--border); background:#f5f8fd; display:flex; align-items:center; justify-content:space-between; }
+.penn-link { font-size:12px; font-weight:600; color:#185fa5; text-decoration:none; display:flex; align-items:center; gap:4px; transition:gap .15s; }
+.penn-link:hover { gap:8px; }
+.penn-link::after { content:'→'; }
+
+/* Connection grid */
+.connect-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1rem; margin-top:1.5rem; }
+.citem { background:white; border-radius:12px; border:1px solid var(--border); padding:1.25rem; display:flex; gap:1rem; }
+.citem-num { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; flex-shrink:0; font-family:'DM Serif Display',serif; }
+.citem-title { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:.35rem; }
+.citem-text { font-size:12.5px; color:var(--slate); line-height:1.65; }
+
+@media(max-width:640px) {
+  .org-grid { grid-template-columns:1fr; }
+  .connect-grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -449,219 +537,635 @@ footer .sources { margin-top:1rem; line-height:1.9; }
      PAGE: COMMUNITY ORGANIZATIONS
 ════════════════════════════════════════════════════════ -->
 <div id="page-orgs" class="page">
-<div class="hero" style="padding:3.5rem 2rem 3rem">
-  <div class="hero-inner">
-    <div class="hero-tag">Community Resources</div>
-    <h1>Organizations serving <em>Asian communities</em> in Philadelphia</h1>
-    <p class="hero-sub">These organizations work at the intersection of health, language access, immigration, and civic power for Philadelphia's Asian American communities.</p>
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">Community Resources · Greater Philadelphia</div>
+    <h1>Organizations serving <em>Asian communities</em></h1>
+    <p>From South Philly refugee services to Montgomery County wellness plazas — the organizations building health equity, language access, and civic power for Philadelphia's diverse Asian American communities.</p>
+    <div class="page-hero-stats">
+      <div class="page-hero-stat"><div class="n">14</div><div class="l">organizations profiled</div></div>
+      <div class="page-hero-stat"><div class="n">60+</div><div class="l">languages served across these orgs</div></div>
+      <div class="page-hero-stat"><div class="n">1966</div><div class="l">oldest org founded (PCDC)</div></div>
+    </div>
   </div>
 </div>
 
-<div style="max-width:1100px;margin:0 auto;padding:3rem 2rem;">
-  <div class="org-grid">
+<div class="page-body">
+  <div class="fbar-label">Filter by focus</div>
+  <div class="fbar" id="org-filters">
+    <button class="fpill active" onclick="filterOrgs('all',this)">All</button>
+    <button class="fpill" onclick="filterOrgs('health',this)">Health services</button>
+    <button class="fpill" onclick="filterOrgs('mental',this)">Mental health</button>
+    <button class="fpill" onclick="filterOrgs('senior',this)">Senior care</button>
+    <button class="fpill" onclick="filterOrgs('civic',this)">Civic &amp; advocacy</button>
+    <button class="fpill" onclick="filterOrgs('southeast',this)">Southeast Asian</button>
+    <button class="fpill" onclick="filterOrgs('korean',this)">Korean</button>
+    <button class="fpill" onclick="filterOrgs('chinese',this)">Chinese</button>
+  </div>
 
-    <div class="org-card">
-      <div class="org-header">
-        <div class="org-icon">S</div>
-        <div>
-          <div class="org-name">SEAMAAC</div>
-          <div class="org-full">Southeast Asian Mutual Assistance Association Coalition</div>
+  <div class="org-grid" id="org-grid">
+
+    <!-- SEAMAAC -->
+    <div class="ocard" data-tags="health mental senior southeast">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#1b6b5f,#5dcaa5)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#e1f5ee;color:#0f6e56">SEA</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">SEAMAAC</div>
+            <div class="ocard-sub">Southeast Asian Mutual Assistance Association Coalition</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-teal">Health &amp; wellness</span>
+          <span class="otag otag-teal">Southeast Asian</span>
+          <span class="otag otag-gold">Refugee services</span>
+          <span class="otag otag-gray">60+ languages</span>
+        </div>
+        <p class="ocard-desc">Founded in 1984, SEAMAAC serves 11,000+ visitors from 77 countries. In 2024, after 40 years of renting, SEAMAAC purchased its permanent headquarters on Snyder Street in South Philly. Health programs include insurance enrollment, elder wellness, digital health navigation, and the <strong>Hansjörg Wyss Wellness Center</strong> — a partnership with Jefferson Health providing comprehensive care regardless of documentation status.</p>
+        <div class="ocard-detail">
+          <div class="ocard-detail-row"><span class="ocd-label">Languages</span><span class="ocd-val">Burmese, Vietnamese, Lao, Nepali, Mandarin, Indonesian + 50 more</span></div>
+          <div class="ocard-detail-row"><span class="ocd-label">Programs</span><span class="ocd-val">Wyss Wellness Center · Elder Gatherings · Asian Women's Health · Hunger Relief</span></div>
+        </div>
+        <div class="ocard-meta">
+          <span>📍 Snyder Ave, South Philadelphia · est. 1984</span>
+          <span>📞 215-467-0690 · info@seamaac.org · Mon–Fri 9am–5pm</span>
         </div>
       </div>
-      <div class="org-tags"><span class="otag health">Health &amp; wellness</span><span class="otag civic">Civic engagement</span><span class="otag imm">Refugee services</span></div>
-      <p class="org-desc">Founded in 1984, SEAMAAC is one of the oldest and largest refugee-founded agencies in Greater Philadelphia, serving thousands through programs in community development, hunger relief, education, and health — with language access across more than <strong>45 linguistic communities</strong>. Their Hansjörg Wyss Wellness Center, a partnership with Jefferson Health, provides comprehensive care to underserved communities in South Philadelphia.</p>
-      <div class="org-meta">
-        <span>📍 Bok Building, South Philadelphia</span>
-        <span>📞 215-467-0690</span>
+      <div class="ocard-footer">
+        <a href="https://seamaac.org" target="_blank" class="ocard-link">seamaac.org</a>
+        <span class="ocard-data-tag" style="background:#e1f5ee;color:#085041">Jefferson Health partner</span>
       </div>
-      <a href="https://seamaac.org" target="_blank" class="org-link">seamaac.org ↗</a>
     </div>
 
-    <div class="org-card">
-      <div class="org-header">
-        <div class="org-icon" style="background:var(--gold-light);color:var(--gold)">P</div>
-        <div>
-          <div class="org-name">PCDC</div>
-          <div class="org-full">Philadelphia Chinatown Development Corporation</div>
+    <!-- PCDC -->
+    <div class="ocard" data-tags="health mental civic chinese">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#c8922a,#efca7a)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#faeeda;color:#633806">PCDC</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">PCDC</div>
+            <div class="ocard-sub">Philadelphia Chinatown Development Corporation</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-red">Mental health (CIFWI)</span>
+          <span class="otag otag-gold">Chinese community</span>
+          <span class="otag otag-gray">EN · Mandarin · Cantonese</span>
+        </div>
+        <p class="ocard-desc">Established in 1966, Chinatown's anchor institution — advocating for <strong>41,000+ Chinese Americans</strong> and serving 3,000+ clients per year. The <strong>Chinese Immigrant Families Wellness Initiative (CIFWI)</strong> provides tailored community mental health care in English, Mandarin, and Cantonese, addressing intergenerational trauma. <em>Directly relevant to this report's finding that Asian adults are diagnosed with depression at 6.25% vs 29% for White adults.</em></p>
+        <div class="ocard-detail">
+          <div class="ocard-detail-row"><span class="ocd-label">Key focus</span><span class="ocd-val">CIFWI mental health · Affordable housing · Youth empowerment</span></div>
+          <div class="ocard-detail-row"><span class="ocd-label">Est.</span><span class="ocd-val">1966 — oldest Asian org in Philadelphia</span></div>
+        </div>
+        <div class="ocard-meta">
+          <span>📍 301–305 N. 9th Street, Philadelphia, PA 19107</span>
+          <span>📞 215-922-6156 · Mon–Fri 8am–5pm</span>
         </div>
       </div>
-      <div class="org-tags"><span class="otag health">Mental health</span><span class="otag civic">Housing</span><span class="otag lang">Bilingual (EN/CN)</span></div>
-      <p class="org-desc">Established in 1966, PCDC is the only institution in Chinatown addressing urban renewal and affordable housing, advocating for over <strong>41,000 Chinese Americans</strong> in Philadelphia and serving more than 3,000 clients per year. Their Chinese Immigrant Families Wellness Initiative (CIFWI) provides tailored community mental health care, addresses systemic intergenerational trauma, and offers programming in English, Mandarin, and Cantonese.</p>
-      <div class="org-meta">
-        <span>📍 301–305 N. 9th St, Philadelphia, PA 19107</span>
-        <span>📞 215-922-6156</span>
-        <span>🕐 Mon–Fri, 8am–5pm</span>
+      <div class="ocard-footer">
+        <a href="https://chinatown-pcdc.org" target="_blank" class="ocard-link">chinatown-pcdc.org</a>
+        <span class="ocard-data-tag" style="background:#faeeda;color:#633806">Mental health gap</span>
       </div>
-      <a href="https://chinatown-pcdc.org" target="_blank" class="org-link">chinatown-pcdc.org ↗</a>
     </div>
 
-    <div class="org-card">
-      <div class="org-header">
-        <div class="org-icon" style="background:var(--teal-light);color:var(--teal)">P</div>
-        <div>
-          <div class="org-name">PASSi</div>
-          <div class="org-full">Penn Asian Senior Services</div>
+    <!-- PASSi -->
+    <div class="ocard" data-tags="health senior">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#1b6b5f,#c8922a)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:var(--teal-light);color:var(--teal)">PASSi</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">PASSi</div>
+            <div class="ocard-sub">Penn Asian Senior Services</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-teal">Senior care</span>
+          <span class="otag otag-blue">19 languages</span>
+          <span class="otag otag-teal">Home health aides</span>
+          <span class="otag otag-gold">Primary care hub (planned)</span>
+        </div>
+        <p class="ocard-desc">Largest provider of linguistically attuned senior services for Asian and LEP older adults in Southeastern PA since 2004. Matches seniors with home health aides sharing their cultural background across <strong>19 languages</strong>. <strong>85% of PASSi's clients have chronic illnesses requiring daily treatment</strong> — directly mirroring this report's chronic disease data. Actively building toward an on-site primary care and mental health hub for ~800 low-income seniors.</p>
+        <div class="ocard-detail">
+          <div class="ocard-detail-row"><span class="ocd-label">Day Center</span><span class="ocd-val">Penn Asian Jubilee Center — free transport, screenings, exercise, RN on-site</span></div>
+          <div class="ocard-detail-row"><span class="ocd-label">Data link</span><span class="ocd-val">85% chronic illness = mirror of hospitalization data in this report</span></div>
+        </div>
+        <div class="ocard-meta">
+          <span>📍 6926 Old York Road, Philadelphia, PA 19126 (Northeast Philly)</span>
+          <span>📞 215-572-1234</span>
         </div>
       </div>
-      <div class="org-tags"><span class="otag health">Senior care</span><span class="otag health">Primary care</span><span class="otag lang">19 languages</span></div>
-      <p class="org-desc">The largest provider of linguistically attuned senior services for Asian and limited English proficient older adults in Southeastern Pennsylvania. Since 2004, PASSi has matched seniors with home health aides sharing their cultural and linguistic background. <strong>85% of the seniors they serve have chronic illnesses</strong> requiring daily treatment. PASSi is working toward becoming a comprehensive healthcare hub for ~800 low-income seniors, including on-site primary care and mental health. Their Penn Asian Jubilee Center provides daily free transportation, health screenings, exercise, cultural programming, and a nutritious Asian lunch.</p>
-      <div class="org-meta">
-        <span>📍 6926 Old York Road, Philadelphia, PA 19126</span>
-        <span>📞 215-572-1234</span>
+      <div class="ocard-footer">
+        <a href="https://passi.us" target="_blank" class="ocard-link">passi.us</a>
+        <span class="ocard-data-tag" style="background:#d4ede9;color:#085041">Seeking Penn Medicine partner</span>
       </div>
-      <a href="https://passi.us" target="_blank" class="org-link">passi.us ↗</a>
     </div>
 
-    <div class="org-card">
-      <div class="org-header">
-        <div class="org-icon" style="background:#f5e0e0;color:#b83535">C</div>
-        <div>
-          <div class="org-name">CAGP</div>
-          <div class="org-full">Cambodian Association of Greater Philadelphia</div>
+    <!-- AAU -->
+    <div class="ocard" data-tags="civic health southeast chinese">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#b83535,#e88080)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#fcebeb;color:#791f1f">AAU</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">Asian Americans United (AAU)</div>
+            <div class="ocard-sub">Four decades of community organizing &amp; advocacy</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-red">Anti-violence hub</span>
+          <span class="otag otag-gray">Education justice</span>
+          <span class="otag otag-gold">Cultural preservation</span>
+          <span class="otag otag-red">Immigrant rights</span>
+        </div>
+        <p class="ocard-desc">For four decades, AAU has organized in Philadelphia's Asian American communities and multiracial coalitions. Founded the <strong>Folk Arts-Cultural Treasures Charter School</strong> and <strong>Chinatown Vote</strong>. The central hub for <strong>anti-Asian violence organizing</strong> — citywide vigils, teach-ins on AAPI history, and multilingual safety resources produced with VietLead and others. Initiated a settlement with the School District to improve services to immigrant students.</p>
+        <div class="ocard-meta">
+          <span>📍 Philadelphia, PA</span>
+          <span>Contacts: Vivian Chang (Executive Director) · Wei Chen (longtime organizer)</span>
         </div>
       </div>
-      <div class="org-tags"><span class="otag civic">Advocacy</span><span class="otag imm">Southeast Asian</span><span class="otag health">Health access</span></div>
-      <p class="org-desc">CAGP improves quality of life for Cambodian Americans in the Greater Philadelphia Area through services, advocacy, and empowerment — ensuring equal access to social and economic development, quality healthcare, and education. Connected to SEAMAAC and the broader Southeast Asian community centered around FDR Park and the Southeast Asian market in South Philadelphia, an important node for food sovereignty and community health work.</p>
-      <div class="org-meta">
-        <span>📍 5412 N. 5th Street, Philadelphia, PA</span>
-        <span>📞 215-324-4070</span>
+      <div class="ocard-footer">
+        <a href="https://aaunited.org" target="_blank" class="ocard-link">aaunited.org</a>
+        <span class="ocard-data-tag" style="background:#fcebeb;color:#791f1f">Est. 1985</span>
       </div>
-      <a href="https://cagp.org" target="_blank" class="org-link">cagp.org ↗</a>
     </div>
 
-    <div class="org-card">
-      <div class="org-header">
-        <div class="org-icon" style="background:#eeedfe;color:#534AB7">A</div>
-        <div>
-          <div class="org-name">API PA</div>
-          <div class="org-full">Asian Pacific Islander Political Alliance — Pennsylvania</div>
+    <!-- VietLead -->
+    <div class="ocard" data-tags="health civic southeast">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#1D9E75,#9fe1cb)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#e1f5ee;color:#04342c">VL</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">VietLead</div>
+            <div class="ocard-sub">Vietnamese &amp; Southeast Asian diaspora · Philly &amp; South Jersey</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-teal">Vietnamese / SE Asian</span>
+          <span class="otag otag-teal">Health navigation</span>
+          <span class="otag otag-gray">Youth organizing</span>
+          <span class="otag otag-gold">Immigration legal</span>
+        </div>
+        <p class="ocard-desc">Grassroots organization founded in 2015 serving Vietnamese and Southeast Asian diaspora communities with a focus on community self-determination and cultural resilience. Programs span community gardens, health promotion and navigation, civic engagement, and legal accompaniment for immigration proceedings. Close partner of AAU for multilingual safety resource production. <em>Currently navigating a significant financial transition — an opportunity for new partnerships and support.</em></p>
+        <div class="ocard-meta">
+          <span>📍 Philadelphia &amp; South Jersey</span>
+          <span>Contact: Nancy Nguyen, Co-founder &amp; Executive Director</span>
         </div>
       </div>
-      <div class="org-tags"><span class="otag civic">Political power</span><span class="otag lang">20 languages</span><span class="otag civic">Voter contact</span></div>
-      <p class="org-desc">API PA builds long-term power for Asian Pacific Islanders in Pennsylvania through political, electoral, and legislative work — with culturally competent, linguistically accessible direct voter contact and solidarity with aligned communities of color. In 2022, API PA ran <strong>the largest Asian American voter contact program in U.S. history</strong>, reaching community members in 20 languages. One of the most connected organizations in Philadelphia's Asian American civic landscape.</p>
-      <div class="org-meta">
-        <span>📍 Philadelphia, PA</span>
+      <div class="ocard-footer">
+        <a href="https://vietlead.org" target="_blank" class="ocard-link">vietlead.org</a>
+        <span class="ocard-data-tag" style="background:#e1f5ee;color:#085041">Est. 2015</span>
       </div>
-      <a href="https://apipennsylvania.org" target="_blank" class="org-link">apipennsylvania.org ↗</a>
     </div>
 
-    <div class="org-card">
-      <div class="org-header">
-        <div class="org-icon" style="background:var(--gold-light);color:var(--gold)">M</div>
-        <div>
-          <div class="org-name">MCAPAA</div>
-          <div class="org-full">Mayor's Commission on Asian Pacific American Affairs</div>
+    <!-- CAGP -->
+    <div class="ocard" data-tags="health civic southeast">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#c8922a,#1b6b5f)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#faeeda;color:#412402">CAGP</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">CAGP</div>
+            <div class="ocard-sub">Cambodian Association of Greater Philadelphia</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-gold">Cambodian community</span>
+          <span class="otag otag-teal">Health access</span>
+          <span class="otag otag-gray">Advocacy</span>
+        </div>
+        <p class="ocard-desc">Improves quality of life for Cambodian Americans in Greater Philadelphia through services, advocacy, and empowerment — ensuring equal access to healthcare, education, and social development. Connected to SEAMAAC and the broader Southeast Asian community centered around FDR Park and the Southeast Asian market in South Philadelphia — a critical node for food sovereignty and community health.</p>
+        <div class="ocard-meta">
+          <span>📍 5412 N. 5th Street, Philadelphia, PA</span>
+          <span>📞 215-324-4070</span>
         </div>
       </div>
-      <div class="org-tags"><span class="otag civic">City government</span><span class="otag civic">Policy</span><span class="otag imm">Immigrant affairs</span></div>
-      <p class="org-desc">Composed of 25 professionals and community leaders representing the diversity of Philadelphia's Asian American population, MCAPAA advises the Mayor on issues important to Asian communities, ensures diversity within City policies, and helps Asian American organizations develop strategies that enhance the social, cultural, and economic status of the community. Operates as part of the <strong>Office of Immigrant Affairs</strong>, which also oversees language access for all City services.</p>
-      <div class="org-meta">
-        <span>📍 City of Philadelphia — Office of Immigrant Affairs</span>
+      <div class="ocard-footer">
+        <a href="https://cagp.org" target="_blank" class="ocard-link">cagp.org</a>
+        <span class="ocard-data-tag" style="background:#faeeda;color:#633806">SEAMAAC network</span>
       </div>
-      <a href="https://phila.gov/departments/office-of-immigrant-affairs" target="_blank" class="org-link">phila.gov/immigrant-affairs ↗</a>
     </div>
 
-    <div class="org-card">
-      <div class="org-header">
-        <div class="org-icon" style="background:var(--teal-light);color:var(--teal)">W</div>
-        <div>
-          <div class="org-name">The Welcoming Center</div>
-          <div class="org-full">Immigrant economic integration &amp; advocacy</div>
+    <!-- Jaisohn Center -->
+    <div class="ocard" data-tags="health mental senior korean">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#534ab7,#afa9ec)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#eeedfe;color:#26215c">JAI</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">Jaisohn Center &amp; AAPI Coalition</div>
+            <div class="ocard-sub">Philip Jaisohn Memorial Foundation · Montgomery County</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-purple">Integrated wellness hub</span>
+          <span class="otag otag-purple">Korean community</span>
+          <span class="otag otag-teal">Senior services</span>
+          <span class="otag otag-blue">8-org AAPI Coalition</span>
+        </div>
+        <p class="ocard-desc">Provides culturally and linguistically responsive healthcare, social services, and advocacy for AAPI communities in Southeastern PA. In <strong>March 2026, opened the $10 million Jaisohn Community Wellness Plaza</strong> — a one-stop hub integrating medical care, senior services, and community programs developed after a multi-year assessment of language and care coordination gaps. Also co-leads the <strong>AAPI Coalition</strong>, coordinating 8 Asian American ethnic communities across Montgomery County.</p>
+        <div class="ocard-detail">
+          <div class="ocard-detail-row"><span class="ocd-label">New in 2026</span><span class="ocd-val">Jaisohn Community Wellness Plaza — $10M integrated care hub</span></div>
+        </div>
+        <div class="ocard-meta">
+          <span>📞 Philadelphia: 215-224-2000 · Lansdale (Montgomery Co): 215-997-2101</span>
         </div>
       </div>
-      <div class="org-tags"><span class="otag imm">Immigrant services</span><span class="otag civic">Economic integration</span><span class="otag health">Health equity</span></div>
-      <p class="org-desc">Founded in 2003, The Welcoming Center opens doors of economic opportunity for immigrants of all education and skill levels, building immigrants' individual and collective agency to address barriers to integration and well-being. It sits at the intersection of immigrant services, civic engagement, and health equity — a key entry point for connecting with Philadelphia's broader immigrant support network.</p>
-      <div class="org-meta">
-        <span>📍 211 N. 13th Street, 4th Floor, Philadelphia, PA 19107</span>
-        <span>📞 215-557-2626</span>
+      <div class="ocard-footer">
+        <a href="https://jaisohn.org" target="_blank" class="ocard-link">jaisohn.org</a>
+        <span class="ocard-data-tag" style="background:#eeedfe;color:#3c3489">New 2026 campus</span>
       </div>
-      <a href="https://welcomingcenter.org" target="_blank" class="org-link">welcomingcenter.org ↗</a>
+    </div>
+
+    <!-- Woori Center -->
+    <div class="ocard" data-tags="civic korean">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#534ab7,#c8922a)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#eeedfe;color:#26215c">우리</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">Woori Center</div>
+            <div class="ocard-sub">Korean &amp; Asian American power-building · Greater Philadelphia</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-purple">Korean community</span>
+          <span class="otag otag-red">Immigrant justice</span>
+          <span class="otag otag-purple">NAKASEC affiliate</span>
+        </div>
+        <p class="ocard-desc">Woori ("우리" = "we" in Korean) builds power through community organizing, civic engagement, youth leadership, and arts and culture. Core focus: immigrant justice, organizing around the reality that <strong>nearly 2 million undocumented Asian Americans live in the US</strong> — including roughly <strong>1 in 7 Korean Americans</strong>. Runs campaigns for citizenship, driver's licenses, and ICE enforcement protections. One of the deepest Korean American organizations in the Pennsylvania region.</p>
+        <div class="ocard-meta">
+          <span>📍 Lansdale, Montgomery County (serves Greater Philadelphia)</span>
+        </div>
+      </div>
+      <div class="ocard-footer">
+        <a href="https://wooricenterpa.org" target="_blank" class="ocard-link">wooricenterpa.org</a>
+        <span class="ocard-data-tag" style="background:#eeedfe;color:#3c3489">NAKASEC network</span>
+      </div>
+    </div>
+
+    <!-- API PA -->
+    <div class="ocard" data-tags="civic">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#185fa5,#378add)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#e6f1fb;color:#042c53">API</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">API PA</div>
+            <div class="ocard-sub">Asian Pacific Islander Political Alliance — Pennsylvania</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-blue">Political power</span>
+          <span class="otag otag-blue">20 languages</span>
+          <span class="otag otag-blue">Statewide coalition</span>
+        </div>
+        <p class="ocard-desc">Builds long-term political power for Asian Pacific Islanders in Pennsylvania through electoral, legislative, and advocacy work with culturally competent, linguistically accessible outreach. In 2022, ran <strong>the largest Asian American voter contact program in U.S. history</strong>, reaching community members in 20 languages. One of the most connected organizations in Philadelphia's Asian American civic landscape with relationships spanning community groups, city government, and statewide coalitions.</p>
+        <div class="ocard-meta">
+          <span>📍 Philadelphia, PA · Contact: Mohan Seshadri, Executive Director</span>
+        </div>
+      </div>
+      <div class="ocard-footer">
+        <a href="https://apipennsylvania.org" target="_blank" class="ocard-link">apipennsylvania.org</a>
+        <span class="ocard-data-tag" style="background:#e6f1fb;color:#0c447c">Record 2022 outreach</span>
+      </div>
+    </div>
+
+    <!-- MCAPAA -->
+    <div class="ocard" data-tags="civic">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#c8922a,#185fa5)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:var(--gold-light);color:#412402">MCA</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">MCAPAA</div>
+            <div class="ocard-sub">Mayor's Commission on Asian Pacific American Affairs</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-gold">City advisory body</span>
+          <span class="otag otag-gold">Policy</span>
+          <span class="otag otag-blue">Office of Immigrant Affairs</span>
+        </div>
+        <p class="ocard-desc">25 professionals and community leaders representing the diversity of Philadelphia's Asian American population advising the Mayor on policies important to Asian communities. Operates under the <strong>Office of Immigrant Affairs</strong>, which oversees language access for all City services — the critical policy lever for immigrant health equity. Natural convener for any cross-sector Asian health initiative requiring city government engagement.</p>
+        <div class="ocard-meta">
+          <span>📍 City of Philadelphia — Office of Immigrant Affairs</span>
+        </div>
+      </div>
+      <div class="ocard-footer">
+        <a href="https://phila.gov/departments/office-of-immigrant-affairs" target="_blank" class="ocard-link">phila.gov/immigrant-affairs</a>
+        <span class="ocard-data-tag" style="background:var(--gold-light);color:#633806">25 commissioners</span>
+      </div>
+    </div>
+
+    <!-- CAIR -->
+    <div class="ocard" data-tags="civic health">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#b83535,#534ab7)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#fcebeb;color:#501313">CAIR</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">CAIR-Philadelphia</div>
+            <div class="ocard-sub">Council on American-Islamic Relations — Pennsylvania</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-red">Civil rights</span>
+          <span class="otag otag-red">Mental health advocacy</span>
+          <span class="otag otag-gold">South Asian Muslim</span>
+        </div>
+        <p class="ocard-desc">Grassroots civil rights and advocacy protecting civil liberties and empowering American Muslims. Relevant for South Asian Muslim communities, civil rights, and coalition-building across communities of color. Has organized <strong>mental health symposia in partnership with mental health professionals</strong> — relevant given the stark mental health underdiagnosis data for Asian adults. A natural coalition partner for initiatives reaching Muslim South Asian communities.</p>
+        <div class="ocard-meta">
+          <span>📍 Philadelphia &amp; Pittsburgh · Contact: Ahmet Tekelioglu PhD, Executive Director</span>
+        </div>
+      </div>
+      <div class="ocard-footer">
+        <a href="https://pa.cair.com" target="_blank" class="ocard-link">pa.cair.com</a>
+        <span class="ocard-data-tag" style="background:#fcebeb;color:#791f1f">South Asian coalition</span>
+      </div>
+    </div>
+
+    <!-- Moder Patshala -->
+    <div class="ocard" data-tags="health civic">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#1b6b5f,#534ab7)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#e1f5ee;color:#04342c">MP</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">Moder Patshala</div>
+            <div class="ocard-sub">Bangladeshi-American after-school education · West Philadelphia</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-teal">Bangladeshi community</span>
+          <span class="otag otag-gray">Education advocacy</span>
+          <span class="otag otag-gray">Bengali–English</span>
+          <span class="otag otag-blue">Penn GSE partnership</span>
+        </div>
+        <p class="ocard-desc">Founded in 2004, "Moder Patshala" means "our school" in Bengali. Provides K–12 homework help, ESL classes, college prep, and parent support for Bangladeshi-American families in West Philadelphia — bridging the gap between public schools and immigrant families navigating language and cultural barriers. Penn GSE TESOL students volunteer as tutors. Per Penn's research, the Bangladeshi community <strong>largely does not access public services</strong> and faces significant language barriers.</p>
+        <div class="ocard-meta">
+          <span>📍 West Philadelphia</span>
+          <span>Contacts: Ali Zaker &amp; Najneen Kabita (founders) · Anaum Jahangir Chowdhury</span>
+        </div>
+      </div>
+      <div class="ocard-footer">
+        <a href="https://moderpatshala.org" target="_blank" class="ocard-link">moderpatshala.org</a>
+        <span class="ocard-data-tag" style="background:#e1f5ee;color:#085041">Penn GSE volunteers</span>
+      </div>
+    </div>
+
+    <!-- ACHC -->
+    <div class="ocard" data-tags="health">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#c8922a,#ef9f27)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:#faeeda;color:#412402">ACHC</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">Asian Community Health Coalition</div>
+            <div class="ocard-sub">Health screening, navigation &amp; cancer prevention</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-gold">Cancer screening</span>
+          <span class="otag otag-gold">Patient navigators</span>
+          <span class="otag otag-gold">Chronic disease</span>
+          <span class="otag otag-gray">390+ partner orgs</span>
+        </div>
+        <p class="ocard-desc">Founded 2000 as the Asian Community Cancer Coalition, now representing <strong>390+ partner organizations</strong> across PA, NJ, NY, and DC/MD. Annual screenings for 1,200+ participants; bilingual patient navigator training; health education on diabetes, hypertension, hepatitis B/C, breast and cervical cancer. Co-runs the <strong>Philadelphia Healthy Chinese Take-out Initiative</strong> ("Less Salt, Healthier Eating") with Temple and PDPH. Directly addresses the hypertension underdetection problem identified in this report.</p>
+        <div class="ocard-meta">
+          <span>📍 1106 Buttonwood Street Unit A, Philadelphia, PA 19123</span>
+          <span>✉ achcoalition@gmail.com</span>
+        </div>
+      </div>
+      <div class="ocard-footer">
+        <a href="https://asiancommunityhealthcoalition.org" target="_blank" class="ocard-link">asiancommunityhealthcoalition.org</a>
+        <span class="ocard-data-tag" style="background:#faeeda;color:#633806">390+ partner orgs</span>
+      </div>
+    </div>
+
+    <!-- Welcoming Center -->
+    <div class="ocard" data-tags="health civic">
+      <div class="ocard-accent" style="background:linear-gradient(90deg,#1b6b5f,#c8922a)"></div>
+      <div class="ocard-body">
+        <div class="ocard-header">
+          <div class="ocard-logo" style="background:var(--teal-light);color:#04342c">TWC</div>
+          <div class="ocard-titles">
+            <div class="ocard-name">The Welcoming Center</div>
+            <div class="ocard-sub">Immigrant economic integration &amp; advocacy · est. 2003</div>
+          </div>
+        </div>
+        <div class="ocard-tags">
+          <span class="otag otag-teal">Immigrant services</span>
+          <span class="otag otag-gray">Economic integration</span>
+          <span class="otag otag-teal">Health equity entry point</span>
+        </div>
+        <p class="ocard-desc">Opens doors of economic opportunity for immigrants of all education and skill levels, building immigrants' collective agency to address barriers to integration and well-being. Sits at the intersection of immigrant services, civic engagement, and health equity — a key entry point for connecting with Philadelphia's broader immigrant support network across communities.</p>
+        <div class="ocard-meta">
+          <span>📍 211 N. 13th Street, 4th Floor, Philadelphia, PA 19107</span>
+          <span>📞 215-557-2626</span>
+        </div>
+      </div>
+      <div class="ocard-footer">
+        <a href="https://welcomingcenter.org" target="_blank" class="ocard-link">welcomingcenter.org</a>
+        <span class="ocard-data-tag" style="background:#d4ede9;color:#085041">Est. 2003</span>
+      </div>
     </div>
 
   </div><!-- /org-grid -->
 </div>
 </div><!-- /page-orgs -->
 
-<!-- ═══════════════════════════════════════════════════════
-     PAGE: PENN RESOURCES
-════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════
+     PENN RESOURCES PAGE
+══════════════════════════════════════════════════════ -->
 <div id="page-penn" class="page">
-<div class="hero" style="padding:3.5rem 2rem 3rem">
-  <div class="hero-inner">
-    <div class="hero-tag">University of Pennsylvania</div>
-    <h1>Penn resources for <em>Asian community</em> health</h1>
-    <p class="hero-sub">University of Pennsylvania programs, clinics, and partnerships with direct relevance to Asian American health access, oral health, mental health, and senior care in Philadelphia.</p>
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-tag">University of Pennsylvania</div>
+    <h1>Penn resources for <em>Asian health</em></h1>
+    <p>Clinical programs, student organizations, and actionable partnership opportunities at Penn with direct relevance to Asian American health equity in Philadelphia.</p>
+    <div class="page-hero-stats">
+      <div class="page-hero-stat"><div class="n">2004</div><div class="l">Penn Asian Health Initiatives founded</div></div>
+      <div class="page-hero-stat"><div class="n">3,000+</div><div class="l">vaccines given to underinsured Asian Philadelphians by PAHI</div></div>
+      <div class="page-hero-stat"><div class="n">1,700+</div><div class="l">patients in Wyss Wellness Center's first year (Jefferson partnership)</div></div>
+    </div>
   </div>
 </div>
 
-<div style="max-width:1100px;margin:0 auto;padding:3rem 2rem;">
-  <div class="org-grid">
+<div class="page-body">
 
-    <div class="org-card penn-card">
-      <div class="penn-badge">Penn Dental Medicine</div>
-      <div class="org-header" style="margin-top:.75rem">
-        <div class="org-icon" style="background:#e8f0fb;color:#185FA5">D</div>
-        <div>
-          <div class="org-name">PennSmiles Mobile Dental Clinic</div>
-          <div class="org-full">Community oral health outreach</div>
-        </div>
-      </div>
-      <div class="org-tags"><span class="otag health">Oral health</span><span class="otag health">Children</span><span class="otag health">Mobile outreach</span></div>
-      <p class="org-desc">Penn Dental Medicine's mobile oral health program travels to schools, Head Start programs, and neighborhood sites providing dental exams, x-rays, cleanings, fluoride treatments, sealants, and basic fillings. <strong>500+ children served annually at 25+ schools</strong> — all third- and fourth-year dental students participate as part of their community health rotation. Currently serving West and Southwest Philadelphia, with expressed interest in <strong>expanding to South Philadelphia</strong> — making it a promising vehicle for outreach to Asian American communities.</p>
-      <div class="org-meta">
-        <span>📞 Outreach: 215-898-4971</span>
-        <span>📞 Appointments: 215-898-8965</span>
-        <span>📍 Currently: West &amp; Southwest Philadelphia</span>
-      </div>
-      <a href="https://dental.upenn.edu/community-care-programs" target="_blank" class="org-link">dental.upenn.edu/community-care ↗</a>
-    </div>
+  <div class="penn-section-head">Clinical programs &amp; research</div>
 
-    <div class="org-card penn-card">
-      <div class="penn-badge">Student Health &amp; Counseling</div>
-      <div class="org-header" style="margin-top:.75rem">
-        <div class="org-icon" style="background:#e8f0fb;color:#185FA5">W</div>
-        <div>
-          <div class="org-name">Wellness at Penn</div>
-          <div class="org-full">Student Health and Counseling</div>
-        </div>
-      </div>
-      <div class="org-tags"><span class="otag health">Mental health</span><span class="otag health">Primary care</span><span class="otag lang">Multilingual</span></div>
-      <p class="org-desc">The primary care and psychological care division of Wellness at Penn, providing safe, accessible, culturally sensitive, student-focused care — including mental health counseling, crisis management, and primary care services. Counseling is available in <strong>Mandarin, Cantonese, Spanish, and Korean</strong>. The division has a track record of programming specifically supporting Asian American student mental health. As an institutional partner, Wellness at Penn represents a model for broader wellness framing beyond clinical care — and a potential research and programming collaborator for community-facing work.</p>
-      <div class="org-meta">
-        <span>📍 3624 Market Street, First Floor West, Philadelphia, PA 19104</span>
-        <span>📞 215-746-WELL (9355) — available 24/7</span>
-      </div>
-      <a href="https://wellness.upenn.edu" target="_blank" class="org-link">wellness.upenn.edu ↗</a>
-    </div>
+  <div class="org-grid" style="margin-bottom:0">
 
-    <div class="org-card penn-card" style="grid-column:1/-1">
-      <div class="penn-badge">Partnership Opportunity</div>
-      <div style="margin-top:1rem">
-        <div style="font-size:15px;font-weight:600;margin-bottom:.75rem">Penn + Community: Key connection points</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem">
-          <div class="connect-item">
-            <div class="connect-icon" style="background:#e8f0fb;color:#185FA5">↗</div>
-            <div class="connect-text"><strong>Jefferson Health × SEAMAAC</strong><br><span>The Hansjörg Wyss Wellness Center already demonstrates how Penn-adjacent health systems can partner with Asian-serving orgs. A similar model with Penn Medicine is achievable.</span></div>
-          </div>
-          <div class="connect-item">
-            <div class="connect-icon" style="background:var(--teal-light);color:var(--teal)">↗</div>
-            <div class="connect-text"><strong>PASSi × Primary care</strong><br><span>PASSi serves 800 seniors with chronic illness and is actively seeking an on-site primary care partner — a direct opportunity for Penn Medicine or Penn Dental outreach.</span></div>
-          </div>
-          <div class="connect-item">
-            <div class="connect-icon" style="background:var(--gold-light);color:var(--gold)">↗</div>
-            <div class="connect-text"><strong>PennSmiles → South Philly</strong><br><span>The mobile clinic's planned South Philadelphia expansion overlaps directly with SEAMAAC and PCDC's geographic footprint and client base.</span></div>
-          </div>
-          <div class="connect-item">
-            <div class="connect-icon" style="background:#f5e0e0;color:#b83535">↗</div>
-            <div class="connect-text"><strong>Mental health gap × PCDC CIFWI</strong><br><span>Asian depression diagnosis rates are 5–6% vs 29% for White adults — one of the starkest disparities in this report. PCDC's CIFWI is already doing this work and is a natural research partner.</span></div>
+    <!-- PennSmiles -->
+    <div class="penn-card-wrap">
+      <div class="penn-card-inner">
+        <div class="penn-badge">Penn Dental Medicine</div>
+        <div class="penn-header">
+          <div class="penn-logo">PS</div>
+          <div>
+            <div class="penn-name">PennSmiles Mobile Dental Clinic</div>
+            <div class="penn-sub">Community oral health outreach program</div>
           </div>
         </div>
+        <div class="ocard-tags" style="margin-bottom:.9rem">
+          <span class="otag otag-blue">Mobile dental</span>
+          <span class="otag otag-blue">Children</span>
+          <span class="otag otag-blue">Head Start sites</span>
+          <span class="otag otag-gold">South Philly expansion planned</span>
+        </div>
+        <p class="penn-desc">Penn Dental Medicine's mobile oral health program delivers dental exams, x-rays, cleanings, fluoride treatments, sealants, and basic fillings directly to schools and community sites. <strong>500+ children served annually at 25+ locations</strong> — all 3rd and 4th year dental students participate as part of their community health rotation. Currently serves West and Southwest Philadelphia, with <strong>expressed interest in expanding to South Philadelphia</strong> — where SEAMAAC's new Snyder Ave headquarters sits at the heart of Asian immigrant communities.</p>
+        <div class="penn-detail">
+          <div class="ocard-detail-row"><span class="ocd-label">Opportunity</span><span class="ocd-val">South Philly expansion overlaps directly with SEAMAAC and PCDC footprint</span></div>
+        </div>
+        <div class="ocard-meta" style="margin-top:.75rem">
+          <span>📞 Outreach: 215-898-4971 · Appointments: 215-898-8965</span>
+        </div>
+      </div>
+      <div class="penn-footer">
+        <a href="https://dental.upenn.edu/community-care-programs" target="_blank" class="penn-link">dental.upenn.edu/community-care</a>
+        <span class="ocard-data-tag" style="background:#e8f0fb;color:#0c447c">Penn Dental Medicine</span>
       </div>
     </div>
 
+    <!-- Wellness at Penn -->
+    <div class="penn-card-wrap">
+      <div class="penn-card-inner">
+        <div class="penn-badge">Student Health &amp; Counseling</div>
+        <div class="penn-header">
+          <div class="penn-logo">W@P</div>
+          <div>
+            <div class="penn-name">Wellness at Penn</div>
+            <div class="penn-sub">Student health, mental health &amp; counseling</div>
+          </div>
+        </div>
+        <div class="ocard-tags" style="margin-bottom:.9rem">
+          <span class="otag otag-red">Mental health</span>
+          <span class="otag otag-blue">Primary care</span>
+          <span class="otag otag-gray">Mandarin · Cantonese · Spanish · Korean</span>
+          <span class="otag otag-blue">24/7 crisis line</span>
+        </div>
+        <p class="penn-desc">Primary care and psychological care for Penn's community, providing accessible, culturally sensitive care including mental health counseling, crisis management, and primary care. <strong>Counseling available in Mandarin, Cantonese, Spanish, and Korean.</strong> The division has a track record of programming specifically for Asian American student mental health. Represents both a direct student resource and a model for multilingual mental health access that could be replicated in community-facing settings.</p>
+        <div class="ocard-meta" style="margin-top:.75rem">
+          <span>📍 3624 Market Street, First Floor West, Philadelphia, PA 19104</span>
+          <span>📞 215-746-WELL (9355) — 24/7</span>
+        </div>
+      </div>
+      <div class="penn-footer">
+        <a href="https://wellness.upenn.edu" target="_blank" class="penn-link">wellness.upenn.edu</a>
+        <span class="ocard-data-tag" style="background:#e8f0fb;color:#0c447c">4-language counseling</span>
+      </div>
+    </div>
+
+    <!-- CIR/SEIU -->
+    <div class="penn-card-wrap">
+      <div class="penn-card-inner">
+        <div class="penn-badge">Penn Medicine · Housestaff Union</div>
+        <div class="penn-header">
+          <div class="penn-logo" style="background:#fcebeb;color:#791f1f">CIR</div>
+          <div>
+            <div class="penn-name">CIR / SEIU — Penn Medicine Chapter</div>
+            <div class="penn-sub">Committee of Interns &amp; Residents · 1,400+ members</div>
+          </div>
+        </div>
+        <div class="ocard-tags" style="margin-bottom:.9rem">
+          <span class="otag otag-red">Housestaff union</span>
+          <span class="otag otag-red">Health equity focus</span>
+          <span class="otag otag-gray">First PA housestaff union</span>
+        </div>
+        <p class="penn-desc">Penn Medicine residents were the <strong>first housestaff in Pennsylvania to unionize with CIR</strong>, with 1,400+ residents and fellows citing their commitment to health equity in West Philadelphia as a key motivation. Penn's unionization has since inspired organizing at Jefferson, Temple, Einstein, CHOP, and ChristianaCare. A relevant partner for connecting residents to community health initiatives and for co-designing culturally competent care protocols for immigrant and AAPI patient populations.</p>
+        <div class="ocard-meta" style="margin-top:.75rem">
+          <span>📍 Pennsylvania office: 924 Cherry Street, Philadelphia, PA 19107</span>
+        </div>
+      </div>
+      <div class="penn-footer">
+        <a href="https://cirseiu.org/upenn" target="_blank" class="penn-link">cirseiu.org/upenn</a>
+        <span class="ocard-data-tag" style="background:#fcebeb;color:#791f1f">First PA housestaff union</span>
+      </div>
+    </div>
+
+    <!-- PAACH -->
+    <div class="penn-card-wrap">
+      <div class="penn-card-inner">
+        <div class="penn-badge">Division of University Life</div>
+        <div class="penn-header">
+          <div class="penn-logo">PAACH</div>
+          <div>
+            <div class="penn-name">Pan-Asian American Community House</div>
+            <div class="penn-sub">Student hub for Asian American culture, advocacy &amp; community service</div>
+          </div>
+        </div>
+        <div class="ocard-tags" style="margin-bottom:.9rem">
+          <span class="otag otag-blue">Student leadership</span>
+          <span class="otag otag-blue">Community service</span>
+          <span class="otag otag-gray">Co-curricular with ASAM</span>
+          <span class="otag otag-blue">Volunteer pipeline</span>
+        </div>
+        <p class="penn-desc">PAACH is Penn's hub for undergraduate, graduate, and professional students interested in Asian American culture and the Asian American diaspora — advising, leadership development, advocacy, and community service. Works closely with Penn's Asian American Studies Program on co-curricular programming and actively seeks partnerships with <strong>community organizations outside campus</strong>. A direct pipeline for student volunteers, community health workers, and research assistants to Asian health initiatives across Philadelphia.</p>
+      </div>
+      <div class="penn-footer">
+        <a href="https://paach.universitylife.upenn.edu" target="_blank" class="penn-link">paach.universitylife.upenn.edu</a>
+        <span class="ocard-data-tag" style="background:#e8f0fb;color:#0c447c">Student volunteer pipeline</span>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <!-- CONNECTION POINTS -->
+  <div class="penn-section-head" style="margin-top:3rem">Key Penn × community connection points</div>
+  <div class="connect-grid">
+    <div class="citem">
+      <div class="citem-num" style="background:#e8f0fb;color:#185fa5">1</div>
+      <div>
+        <div class="citem-title">Jefferson × SEAMAAC → Penn Medicine</div>
+        <div class="citem-text">The Wyss Wellness Center proves Penn-adjacent health systems can partner with Asian-serving orgs at scale. Penn Medicine Family Care's multisite primary care network is a natural next partner for an equivalent model in South Philadelphia.</div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-num" style="background:#d4ede9;color:#0f6e56">2</div>
+      <div>
+        <div class="citem-title">PASSi + Penn Medicine primary care</div>
+        <div class="citem-text">PASSi serves 800 seniors with chronic illness and is actively seeking an on-site primary care partner. Penn Medicine Geriatrics or Family Medicine is a direct fit — 85% of PASSi clients have conditions requiring daily treatment.</div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-num" style="background:#faeeda;color:#633806">3</div>
+      <div>
+        <div class="citem-title">PennSmiles → South Philadelphia</div>
+        <div class="citem-text">The mobile clinic's planned South Philly expansion overlaps directly with SEAMAAC's new Snyder Ave HQ and PCDC's Chinatown footprint. A coordinated rollout would reach the densest Asian communities in the city.</div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-num" style="background:#fcebeb;color:#b83535">4</div>
+      <div>
+        <div class="citem-title">Mental health gap × PCDC CIFWI</div>
+        <div class="citem-text">Asian depression diagnosis is 6.25% vs 29% for White adults — the starkest disparity in this report. PCDC's CIFWI + Wellness at Penn's multilingual counselors + Penn ASAM researchers is a natural research and service triangle.</div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-num" style="background:#eeedfe;color:#534ab7">5</div>
+      <div>
+        <div class="citem-title">Penn GSE × Moder Patshala</div>
+        <div class="citem-text">Penn GSE TESOL students already volunteer as tutors at Moder Patshala. This existing relationship can expand into health literacy, health navigation training, and parent engagement for Bangladeshi families.</div>
+      </div>
+    </div>
+    <div class="citem">
+      <div class="citem-num" style="background:#e1f5ee;color:#0f6e56">6</div>
+      <div>
+        <div class="citem-title">CIR residents × AAPI patient populations</div>
+        <div class="citem-text">Penn Medicine's unionized residents explicitly prioritize health equity in underserved communities. Connecting CIR members to SEAMAAC, ACHC, and VietLead for community health rotations or care protocol co-design is actionable near-term.</div>
+      </div>
+    </div>
   </div>
+
 </div>
 </div><!-- /page-penn -->
+
+
 
 <footer>
   <div class="fc">
@@ -676,7 +1180,7 @@ footer .sources { margin-top:1rem; line-height:1.9; }
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── DATA ────────────────────────────────────────────────────────────────────
 const D = {
   philly:{
@@ -1001,6 +1505,16 @@ window.addEventListener('scroll', ()=>{
   sections.forEach(s=>{ if(window.scrollY>=s.offsetTop-120) current=s.id; });
   navLinks.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+current); });
 });
+
+// ── ORG FILTERING ────────────────────────────────────────────────────────────
+function filterOrgs(tag, btn) {
+  document.querySelectorAll('#org-filters .fpill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#org-grid .ocard').forEach(card => {
+    const tags = card.dataset.tags || '';
+    card.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
+  });
+}
 
 // ── PAGE SWITCHING ────────────────────────────────────────────────────────────
 function showPage(name) {
